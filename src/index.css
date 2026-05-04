@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  /* Color System */
+  --color-estate-navy: #1B2341;
+  --color-warm-gold: #C9A96E;
+  --color-off-white: #FAFAF8;
+  --color-sand: #F5F1EB;
+  --color-slate: #3D4254;
+  --color-mist: #8B9BAA;
+  --color-stone: #D4CFC6;
+  --color-forest: #2D6A5C;
+  --color-clay: #B8453A;
+
+  /* Typography */
+  --font-serif: "Playfair Display", serif;
+  --font-sans: "Inter", sans-serif;
+
+  /* Shadows */
+  --shadow-luxury: 0 10px 40px -15px rgba(27, 35, 65, 0.08);
+}
+
+@layer base {
+  body {
+    @apply font-sans text-slate bg-white;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif tracking-widest uppercase;
+  }
+}
+
+.luxury-container {
+  @apply max-w-[1320px] mx-auto px-6 lg:px-12;
+}
+
+.section-padding {
+  @apply py-[120px];
+}
+
+.luxury-divider {
+  @apply w-24 h-[1px] bg-warm-gold mx-auto my-12 opacity-50;
+}
