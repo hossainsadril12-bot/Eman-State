@@ -677,7 +677,7 @@ export default function App() {
               viewport={{ once: false, amount: 0.5 }}
               transition={{ duration: 2, ease: [0.16, 1, 0.3, 1] }}
             >
-              <h2 className="text-2xl md:text-5xl font-serif text-estate-navy lowercase tracking-tight leading-relaxed italic max-w-4xl mx-auto">
+              <h2 className="text-2xl md:text-[40px] font-serif text-estate-navy lowercase tracking-tight leading-relaxed italic max-w-4xl mx-auto">
                 "A decision like this <span className="text-[#B28E4B] not-italic font-sans text-3xl md:text-[64px] tracking-[0.3em] uppercase align-middle mx-6 font-bold whitespace-nowrap">deserves</span> clarity, not pressure."
               </h2>
               <motion.div
