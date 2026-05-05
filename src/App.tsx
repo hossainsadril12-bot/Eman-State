@@ -960,7 +960,7 @@ export default function App() {
               >
                 <div className="space-y-4">
                   <FadeUp className="text-warm-gold text-[10px] tracking-[0.5em] uppercase font-bold block">The Equity Model</FadeUp>
-                  <h2 className="text-3xl md:text-5xl text-white tracking-tighter leading-[0.9] font-serif">
+                  <h2 className="text-4xl md:text-[64px] text-white tracking-tighter leading-[1.3] font-serif">
                     <SplitText>Ownership </SplitText>
                     <SplitText className="italic whitespace-nowrap" delay={0.08}>You Can Share</SplitText>
                   </h2>
