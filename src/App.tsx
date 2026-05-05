@@ -719,28 +719,25 @@ export default function App() {
             <div className="space-y-32">
               {/* Redesigned grid from image, now on light background */}
               <motion.div
-                className="grid grid-cols-1 lg:grid-cols-3 gap-16"
+                className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16"
                 variants={staggerContainerVariants}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, amount: 0.2 }}
+                viewport={{ once: true, amount: 0.1 }}
               >
                 {[
                   {
-                    title: "Registered Deed",
-                    sub: "(Saf Kabala)",
+                    title: "A Registered Deed (Saf Kabala)",
                     description: "Executed and recorded under the Registration Act, 1908, in your name.",
                     image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&q=80&w=800"
                   },
                   {
-                    title: "Proportional Land Share",
-                    sub: "Ownership",
+                    title: "A Proportional Share Of The Land",
                     description: "An undivided interest in the project land, mutated and registered in your name.",
                     image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=800"
                   },
                   {
                     title: "Legal Title To Your Unit",
-                    sub: "Full Rights",
                     description: "Your asset to hold, transfer, or inherit, subject to the terms of your ownership agreement.",
                     image: "https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&q=80&w=800"
                   }
@@ -750,20 +747,19 @@ export default function App() {
                     variants={staggerItemVariants}
                     className="flex flex-col items-center text-center group"
                   >
-                    <div className="aspect-[16/10] w-full overflow-hidden mb-10 bg-estate-navy/5 relative border border-estate-navy/5">
+                    <div className="aspect-[16/10] w-full overflow-hidden mb-8 bg-estate-navy/5 relative border border-estate-navy/5">
                       <img
                         src={item.image}
-                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-105"
+                        className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-105"
                         alt={item.title}
                       />
-                      <div className="absolute inset-0 bg-estate-navy/5 group-hover:bg-transparent transition-colors duration-700" />
                     </div>
 
-                    <div className="space-y-4">
-                      <h3 className="text-3xl text-estate-navy font-bold leading-tight uppercase tracking-tight">
+                    <div className="space-y-4 px-4">
+                      <h3 className="text-2xl text-estate-navy font-bold leading-tight uppercase tracking-tight">
                         {item.title}
                       </h3>
-                      <p className="text-mist text-base leading-relaxed max-w-[320px] mx-auto font-light">
+                      <p className="text-estate-navy/70 text-base leading-relaxed max-w-[340px] mx-auto">
                         {item.description}
                       </p>
                     </div>
