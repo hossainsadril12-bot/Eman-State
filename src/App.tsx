@@ -695,36 +695,29 @@ export default function App() {
         </section>
 
         {/* OWNERSHIP MODEL → Structured + Scannable */}
-        <section className="section-padding bg-estate-navy relative overflow-hidden">
-          {/* Subtle background element */}
-          <div className="absolute left-0 bottom-0 w-64 h-64 border-r border-t border-white/5 -rotate-12 translate-y-1/2 -translate-x-1/2 pointer-events-none" />
+        {/* OWNERSHIP MODEL → Structured + Scannable */}
+        <section className="section-padding bg-white relative overflow-hidden">
+          {/* Subtle background element - puzzle pattern from About section */}
+          <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0c0 5.523 4.477 10 10 10s10-4.477 10-10h20v20c-5.523 0-10 4.477-10 10s4.477 10 10 10v20h-20c0-5.523-4.477-10-10-10s-10 4.477-10 10h-20v-20c5.523 0 10-4.477 10-10s-4.477-10-10-10v-20h20z' fill='none' stroke='%23000' stroke-width='1'/%3E%3C/svg%3E")`,
+            }}
+          />
 
-          <div className="luxury-container">
-            {/* Header: Centered layout from image */}
+          <div className="luxury-container relative z-10">
+            {/* Header: Centered layout */}
             <div className="mb-20 text-center space-y-6">
               <FadeUp className="text-warm-gold text-[10px] tracking-[0.4em] uppercase font-bold">Ownership</FadeUp>
-              <h2 className="text-4xl lg:text-7xl text-white tracking-tighter leading-[1.1] font-serif">
-                What you own <span className="italic text-warm-gold">and why it matters</span>
+              <h2 className="text-4xl lg:text-7xl text-estate-navy tracking-tighter leading-[1.1] font-serif">
+                What you own
               </h2>
-              <FadeUp delay={0.1} className="text-white/60 text-lg max-w-3xl mx-auto leading-relaxed">
-                Your deed is registered in your name with full legal standing. This is permanent ownership that passes to your heirs without expiration or buyback conditions.
+              <FadeUp delay={0.1} className="text-estate-navy/60 text-lg max-w-4xl mx-auto leading-relaxed">
+                When you invest in Velora Inani, you acquire a specific, <span className="text-warm-gold">identifiable</span> hotel unit — <span className="italic opacity-60">not a share in a fund, not a promise on paper.</span>
               </FadeUp>
             </div>
 
             <div className="space-y-32">
-              {/* Introduction Text (Kept as requested, made white) */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="max-w-4xl border-l-[3px] border-warm-gold pl-10"
-              >
-                <p className="text-white text-2xl md:text-5xl font-serif leading-tight">
-                  When you invest in Velora Inani, you acquire a specific, <span className="text-warm-gold">identifiable</span> hotel unit — <span className="italic opacity-60">not a share in a fund, not a promise on paper.</span>
-                </p>
-              </motion.div>
-
-              {/* Redesigned grid from image */}
+              {/* Redesigned grid from image, now on light background */}
               <motion.div
                 className="grid grid-cols-1 lg:grid-cols-3 gap-16"
                 variants={staggerContainerVariants}
@@ -757,20 +750,20 @@ export default function App() {
                     variants={staggerItemVariants}
                     className="flex flex-col items-center text-center group"
                   >
-                    <div className="aspect-[16/10] w-full overflow-hidden mb-10 bg-white/5 relative">
-                      <img 
-                        src={item.image} 
-                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-105" 
-                        alt={item.title} 
+                    <div className="aspect-[16/10] w-full overflow-hidden mb-10 bg-estate-navy/5 relative border border-estate-navy/5">
+                      <img
+                        src={item.image}
+                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-105"
+                        alt={item.title}
                       />
-                      <div className="absolute inset-0 bg-estate-navy/20 group-hover:bg-transparent transition-colors duration-700" />
+                      <div className="absolute inset-0 bg-estate-navy/5 group-hover:bg-transparent transition-colors duration-700" />
                     </div>
 
                     <div className="space-y-4">
-                      <h3 className="text-3xl text-white font-bold leading-tight uppercase tracking-tight">
+                      <h3 className="text-3xl text-estate-navy font-bold leading-tight uppercase tracking-tight">
                         {item.title}
                       </h3>
-                      <p className="text-white/50 text-base leading-relaxed max-w-[320px] mx-auto font-light">
+                      <p className="text-mist text-base leading-relaxed max-w-[320px] mx-auto font-light">
                         {item.description}
                       </p>
                     </div>
@@ -785,14 +778,14 @@ export default function App() {
                 viewport={{ once: true }}
                 className="pt-16"
               >
-                <div className="bg-white/5 border border-white/10 p-12 lg:p-20 relative overflow-hidden group">
+                <div className="bg-estate-navy text-white p-12 lg:p-20 relative overflow-hidden group">
                   <div className="absolute top-0 right-0 w-96 h-96 bg-warm-gold/[0.03] -translate-y-1/2 translate-x-1/2 rotate-45 border border-white/5 pointer-events-none" />
-                  
+
                   <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-16 relative z-10">
                     <p className="font-serif italic text-3xl lg:text-5xl leading-[1.2] max-w-3xl text-white">
                       "You own the asset. <span className="text-warm-gold not-italic">Eiman Estates runs the business</span> to protect the value of every owner's investment."
                     </p>
-                    
+
                     <div className="flex flex-col sm:flex-row gap-8 items-center lg:shrink-0">
                       <Button className="!bg-warm-gold !text-estate-navy border-none h-16 px-10 text-sm font-bold uppercase tracking-widest hover:scale-105 transition-all">Request Legal Dossier</Button>
                       <p className="text-white/40 text-[10px] tracking-[0.2em] uppercase font-bold text-center lg:text-left">Verified Ownership <br /> Structure</p>
