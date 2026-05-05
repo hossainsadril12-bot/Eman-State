@@ -457,7 +457,22 @@ export default function App() {
               style={{ opacity: heroOpacity }}
               className="absolute bottom-12 w-full flex flex-col items-center gap-4 text-white/40"
             >
-              <span className="text-[8px] tracking-[0.5em] uppercase">Scroll to Discover</span>
+              <div className="flex flex-col items-center gap-3">
+                <div className="w-[1px] h-16 bg-white/10 relative overflow-hidden">
+                  <motion.div 
+                    className="absolute top-0 left-0 w-full h-full bg-warm-gold"
+                    animate={{ 
+                      y: ['-100%', '100%'] 
+                    }}
+                    transition={{ 
+                      duration: 2.5, 
+                      repeat: Infinity, 
+                      ease: [0.16, 1, 0.3, 1] 
+                    }}
+                  />
+                </div>
+                <span className="text-[8px] tracking-[0.5em] uppercase">Scroll to Discover</span>
+              </div>
             </motion.div>
           </div>
         </section>
