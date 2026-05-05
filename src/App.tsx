@@ -24,6 +24,88 @@ import {
   Star
 } from 'lucide-react';
 
+/* --- ANIMATION PRIMITIVES (Vivre-style) --- */
+
+const splitVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.018 } },
+};
+const charVariants = {
+  hidden: { y: '110%', opacity: 0 },
+  visible: { y: '0%', opacity: 1, transition: { duration: 0.75, ease: [0.16, 1, 0.3, 1] } },
+};
+
+const SplitText = ({ children, className = '', delay = 0 }: { children: string; className?: string; delay?: number }) => (
+  <motion.span
+    className={`inline-block overflow-hidden ${className}`}
+    variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.018, delayChildren: delay } } }}
+    initial="hidden"
+    whileInView="visible"
+    viewport={{ once: true, margin: '-80px' }}
+    style={{ display: 'block' }}
+  >
+    {children.split('').map((char, i) => (
+      <motion.span key={i} variants={charVariants} style={{ display: 'inline-block', whiteSpace: char === ' ' ? 'pre' : 'normal' }}>
+        {char}
+      </motion.span>
+    ))}
+  </motion.span>
+);
+
+const fadeUpVariants = {
+  hidden: { opacity: 0, y: 32 },
+  visible: (delay: number = 0) => ({
+    opacity: 1, y: 0,
+    transition: { duration: 0.85, ease: [0.16, 1, 0.3, 1], delay },
+  }),
+};
+
+const FadeUp = ({ children, className = '', delay = 0, as: Tag = 'div' }: { children: React.ReactNode; className?: string; delay?: number; as?: any }) => (
+  <motion.div
+    className={className}
+    variants={fadeUpVariants}
+    custom={delay}
+    initial="hidden"
+    whileInView="visible"
+    viewport={{ once: true, margin: '-60px' }}
+    style={{ display: (Tag === 'span' ? 'inline-block' : undefined) }}
+  >
+    {children}
+  </motion.div>
+);
+
+const FadeIn = ({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => (
+  <motion.div
+    className={className}
+    initial={{ opacity: 0, scale: 1.04 }}
+    whileInView={{ opacity: 1, scale: 1 }}
+    transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay }}
+    viewport={{ once: true, margin: '-60px' }}
+  >
+    {children}
+  </motion.div>
+);
+
+const AnimatedLine = ({ className = '', delay = 0 }: { className?: string; delay?: number }) => (
+  <motion.div
+    className={`h-[1px] bg-warm-gold origin-left ${className}`}
+    initial={{ scaleX: 0, opacity: 0 }}
+    whileInView={{ scaleX: 1, opacity: 1 }}
+    transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay }}
+    viewport={{ once: true, margin: '-60px' }}
+  />
+
+);
+
+const staggerContainerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.12 } },
+};
+const staggerItemVariants = {
+  hidden: { opacity: 0, y: 36 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.85, ease: [0.16, 1, 0.3, 1] } },
+};
+
 /* --- UI COMPONENTS --- */
 
 const Button = ({ 
@@ -247,8 +329,12 @@ export default function App() {
             style={{ color: navText }}
             className="flex-1 flex justify-end items-center gap-8"
           >
-            <button className="text-[10px] tracking-[0.3em] uppercase font-bold hover:text-warm-gold transition-colors">Booking</button>
-            <ShoppingBag className="w-5 h-5 cursor-pointer hover:text-warm-gold transition-colors" />
+            <motion.button
+              style={{ borderColor: navText, color: navText }}
+              className="px-6 py-2.5 border text-[10px] tracking-[0.3em] uppercase font-bold hover:bg-warm-gold hover:text-estate-navy hover:border-warm-gold transition-all duration-500 cursor-pointer"
+            >
+              Booking
+            </motion.button>
           </motion.div>
         </div>
 
@@ -323,11 +409,11 @@ export default function App() {
                  playsInline
                  className="w-full h-full object-cover" 
                >
-                 <source src="https://assets.mixkit.co/videos/preview/mixkit-luxury-resort-with-swimming-pool-and-palm-trees-at-sunset-1224-large.mp4" type="video/mp4" />
+                 <source src="/hero-bg.mp4" type="video/mp4" />
                </video>
                {/* Deep Teal/Navy Overlay to match image */}
-               <div className="absolute inset-0 bg-[#0a192f]/70 mix-blend-multiply" />
-               <div className="absolute inset-0 bg-gradient-to-b from-[#0a192f]/40 via-transparent to-[#0a192f]/60" />
+               <div className="absolute inset-0 bg-[#0a192f]/80 mix-blend-multiply" />
+               <div className="absolute inset-0 bg-gradient-to-b from-[#0a192f]/50 via-transparent to-[#0a192f]/70" />
             </motion.div>
             
             <div className="luxury-container relative z-10 h-full flex flex-col items-center justify-center text-center pt-48">
@@ -338,11 +424,10 @@ export default function App() {
                 transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
                 className="max-w-5xl flex flex-col items-center"
               >
-                {/* Logo Area */}
-                <div className="mb-4 flex flex-col items-center">
-                   <img src="/logo-white.svg" alt="Eman State Logo" className="h-20 w-auto mb-2" />
-                   <h2 className="text-white text-[9px] tracking-[0.5em] uppercase font-bold mb-1">Velora Inani</h2>
-                   <p className="text-warm-gold text-[7px] tracking-[0.3em] uppercase font-bold opacity-80 italic">By Eiman Estates</p>
+                {/* Brand Area */}
+                <div className="mb-8 flex flex-col items-center">
+                   <h2 className="text-white text-3xl md:text-5xl tracking-[0.3em] uppercase font-serif mb-3">Velora Inani</h2>
+                   <p className="text-warm-gold text-[10px] md:text-xs tracking-[0.4em] uppercase font-bold opacity-90 italic">By Eiman Estates</p>
                 </div>
                 
                 <h1 className="text-white text-5xl md:text-8xl lg:text-9xl leading-[1] mb-8 tracking-tight font-serif lowercase italic">
@@ -384,41 +469,35 @@ export default function App() {
           />
 
           <div className="luxury-container grid md:grid-cols-2 gap-24 items-center relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="space-y-10 max-w-[600px]"
-            >
+            <div className="space-y-10 max-w-[600px]">
               <div className="space-y-4">
-                <p className="text-mist text-[10px] tracking-[0.4em] uppercase font-bold">
+                <FadeUp className="text-mist text-[10px] tracking-[0.4em] uppercase font-bold">
                   ABOUT THE PROJECT
-                </p>
+                </FadeUp>
                 <h2 className="text-4xl lg:text-7xl text-estate-navy tracking-tight leading-[1.1]">
-                   About <br/>
-                  <span className="italic text-warm-gold">Velora Inani</span>
+                  <SplitText>About </SplitText>
+                  <SplitText className="italic text-warm-gold" delay={0.08}>Velora Inani</SplitText>
                 </h2>
               </div>
               
               <div className="space-y-8">
-                <p className="text-slate text-xl leading-relaxed font-light">
+                <FadeUp delay={0.1} className="text-slate text-xl leading-relaxed font-light">
                   Velora Inani is a fully managed hotel development set along a quiet, elevated stretch of Inani's coastline where the hills meet the sea — away from the congestion of the main tourist corridor.
-                </p>
+                </FadeUp>
                 
-                <p className="text-warm-gold text-lg font-serif italic border-l-2 border-warm-gold/30 pl-8">
+                <FadeUp delay={0.18} className="text-warm-gold text-lg font-serif italic border-l-2 border-warm-gold/30 pl-8">
                   A beachfront asset on Marine Drive, Cox's Bazar, designed for long-term ownership. A limited number of units are being offered in this first phase.
-                </p>
+                </FadeUp>
 
                 <p className="text-mist text-base leading-relaxed">
                   The project is designed by <span className="text-estate-navy font-semibold">HuaDu Architecture & Urban Design (HDD)</span>, a Shanghai-based firm whose portfolio spans three continents, including the Beijing Sunrise East Kempinski Hotel. HDD is responsible for the architectural, structural, MEP, and interior design of Velora Inani.
                 </p>
               </div>
 
-              <div className="pt-8">
+              <FadeUp delay={0.32} className="pt-8">
                 <Button variant="secondary">The Vision Dossier</Button>
-              </div>
-            </motion.div>
+              </FadeUp>
+            </div>
 
             <div className="relative h-[650px] w-full">
               {/* Image 2: Beach Sunset (Top Right) - Further back */}
@@ -426,11 +505,13 @@ export default function App() {
                 style={{ y: aboutImg2Y }}
                 className="absolute top-0 right-0 w-[50%] h-[70%] bg-sand overflow-hidden shadow-xl z-0"
               >
-                <img 
-                  src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=800" 
-                  className="w-full h-full object-cover" 
-                  alt="Destination"
-                />
+                <FadeIn className="w-full h-full">
+                  <img 
+                    src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=800" 
+                    className="w-full h-full object-cover" 
+                    alt="Destination"
+                  />
+                </FadeIn>
               </motion.div>
 
               {/* Image 1: Kayak (Middle Left) */}
@@ -438,11 +519,13 @@ export default function App() {
                 style={{ y: aboutImg1Y }}
                 className="absolute top-[10%] left-0 w-[60%] aspect-square bg-sand overflow-hidden shadow-2xl z-10"
               >
-                <img 
-                  src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=80&w=800" 
-                  className="w-full h-full object-cover" 
-                  alt="Experience"
-                />
+                <FadeIn delay={0.1} className="w-full h-full">
+                  <img 
+                    src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=80&w=800" 
+                    className="w-full h-full object-cover" 
+                    alt="Experience"
+                  />
+                </FadeIn>
               </motion.div>
 
               {/* Image 3: Resort Pool (Bottom Center) - Front */}
@@ -450,11 +533,13 @@ export default function App() {
                 style={{ y: aboutImg3Y }}
                 className="absolute top-[40%] left-[30%] w-[60%] aspect-[4/5] bg-sand overflow-hidden shadow-2xl z-20 border-4 border-white"
               >
-                <img 
-                  src="https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&q=80&w=800" 
-                  className="w-full h-full object-cover" 
-                  alt="Relaxation"
-                />
+                <FadeIn delay={0.2} className="w-full h-full">
+                  <img 
+                    src="https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&q=80&w=800" 
+                    className="w-full h-full object-cover" 
+                    alt="Relaxation"
+                  />
+                </FadeIn>
               </motion.div>
             </div>
           </div>
@@ -473,12 +558,7 @@ export default function App() {
 
           <div className="luxury-container grid lg:grid-cols-12 gap-16 items-center">
             {/* Portrait Column */}
-            <motion.div 
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="lg:col-span-5 relative"
-            >
+            <FadeIn className="lg:col-span-5 relative">
               <div className="aspect-[4/5] bg-sand overflow-hidden shadow-2xl relative z-10">
                 <img 
                   src="/prof-portrait.jpg" 
@@ -489,29 +569,24 @@ export default function App() {
               </div>
               {/* Decorative Frame */}
               <div className="absolute -top-6 -left-6 w-full h-full border border-warm-gold/20 -z-0" />
-            </motion.div>
+            </FadeIn>
 
             {/* Content Column */}
-            <motion.div 
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="lg:col-span-7 space-y-10"
-            >
+            <div className="lg:col-span-7 space-y-10">
               <div className="space-y-6">
                 <div className="space-y-4">
-                  <p className="text-estate-navy text-[10px] tracking-[0.4em] uppercase font-bold opacity-80">
+                  <FadeUp className="text-estate-navy text-[10px] tracking-[0.4em] uppercase font-bold opacity-80">
                     STRUCTURAL ADVISORY IS LED BY
-                  </p>
-                  <div className="w-16 h-[2px] bg-warm-gold" />
+                  </FadeUp>
+                  <AnimatedLine className="w-16" delay={0.2} />
                 </div>
                 <h2 className="text-4xl lg:text-5xl text-estate-navy font-serif leading-tight">
-                  Prof. Dr. M <br />
-                  <span className="italic">Shamim Z Bosunia</span>
+                  <SplitText>Prof. Dr. M </SplitText>
+                  <SplitText className="italic" delay={0.1}>Shamim Z Bosunia</SplitText>
                 </h2>
-                <p className="text-slate text-lg leading-relaxed max-w-2xl font-light">
+                <FadeUp delay={0.15} className="text-slate text-lg leading-relaxed max-w-2xl font-light">
                   A distinguished leader in the field of civil engineering, whose vision and expertise continue to shape some of the nation's most iconic infrastructure projects.
-                </p>
+                </FadeUp>
               </div>
 
               <div className="space-y-8 pt-6 border-t border-stone/30 max-w-xl">
@@ -549,7 +624,7 @@ export default function App() {
                   </motion.div>
                 ))}
               </div>
-            </motion.div>
+            </div>
           </div>
         </section>
 
@@ -604,10 +679,10 @@ export default function App() {
           <div className="luxury-container">
             {/* Header: Centered first */}
             <div className="mb-24 space-y-6">
-              <span className="text-warm-gold text-[10px] tracking-[0.4em] uppercase font-bold">4A — The Asset</span>
+              <FadeUp className="text-warm-gold text-[10px] tracking-[0.4em] uppercase font-bold">4A — The Asset</FadeUp>
               <h2 className="text-4xl lg:text-8xl text-estate-navy tracking-tighter leading-[0.9]">
-                What You <br />
-                <span className="italic text-warm-gold">Own.</span>
+                <SplitText>What You </SplitText>
+                <SplitText className="italic text-warm-gold" delay={0.1}>Own.</SplitText>
               </h2>
             </div>
 
@@ -625,7 +700,13 @@ export default function App() {
               </motion.div>
 
               {/* Redesigned content blocks: Layered Bento-Editorial Style */}
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              <motion.div
+                className="grid grid-cols-1 lg:grid-cols-3 gap-8"
+                variants={staggerContainerVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-60px" }}
+              >
                 {[
                   {
                     title: "A Registered Deed",
@@ -651,10 +732,7 @@ export default function App() {
                 ].map((item, idx) => (
                   <motion.div 
                     key={item.title}
-                    initial={{ opacity: 0, y: 40 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: idx * 0.15, duration: 1 }}
-                    viewport={{ once: true }}
+                    variants={staggerItemVariants}
                     className="flex flex-col h-full bg-[#FBF9F6] border border-stone/20 p-10 lg:p-12 hover:border-warm-gold transition-all duration-700 hover:shadow-2xl hover:shadow-warm-gold/5 group"
                   >
                     <div className="flex justify-between items-start mb-12">
@@ -691,7 +769,7 @@ export default function App() {
                     </div>
                   </motion.div>
                 ))}
-              </div>
+              </motion.div>
 
               {/* Closing statement block */}
               <motion.div 
@@ -880,10 +958,10 @@ export default function App() {
                 className="space-y-12"
               >
                 <div className="space-y-4">
-                  <span className="text-warm-gold text-[10px] tracking-[0.5em] uppercase font-bold block">The Equity Model</span>
+                  <FadeUp className="text-warm-gold text-[10px] tracking-[0.5em] uppercase font-bold block">The Equity Model</FadeUp>
                   <h2 className="text-5xl md:text-8xl text-white tracking-tighter leading-[0.9] font-serif">
-                    Ownership <br />
-                    <span className="italic">You Can Share</span>
+                    <SplitText>Ownership </SplitText>
+                    <SplitText className="italic" delay={0.08}>You Can Share</SplitText>
                   </h2>
                 </div>
 
@@ -932,10 +1010,10 @@ export default function App() {
                 className="space-y-12"
               >
                 <div className="space-y-4">
-                  <span className="text-warm-gold text-[10px] tracking-[0.5em] uppercase font-bold">About Eiman Estates</span>
+                  <FadeUp className="text-warm-gold text-[10px] tracking-[0.5em] uppercase font-bold">About Eiman Estates</FadeUp>
                   <h2 className="text-4xl lg:text-6xl text-estate-navy tracking-tight leading-[1.1] font-serif">
-                    Built To The Same Standard <br />
-                    <span className="italic">It Is Managed.</span>
+                    <SplitText>Built To The Same Standard </SplitText>
+                    <SplitText className="italic" delay={0.08}>It Is Managed.</SplitText>
                   </h2>
                 </div>
 
@@ -998,16 +1076,17 @@ export default function App() {
             <div className="grid lg:grid-cols-12 gap-16">
               {/* FAQ Header */}
               <div className="lg:col-span-4 space-y-6">
-                <span className="text-warm-gold text-[10px] tracking-[0.5em] uppercase font-bold">Frequently Asked Questions</span>
+                <FadeUp className="text-warm-gold text-[10px] tracking-[0.5em] uppercase font-bold">Frequently Asked Questions</FadeUp>
                 <h2 className="text-4xl md:text-5xl text-estate-navy tracking-tight leading-none font-serif">
-                  Clear, <br />
-                  <span className="italic text-warm-gold">transparent</span> answers.
+                  <SplitText>Clear, </SplitText>
+                  <SplitText className="italic text-warm-gold" delay={0.06}>transparent</SplitText>
+                  <SplitText delay={0.12}> answers.</SplitText>
                 </h2>
-                <p className="text-mist text-lg leading-relaxed pt-6">
+                <FadeUp delay={0.15} className="text-mist text-lg leading-relaxed pt-6">
                   We believe absolute clarity is the foundation of trust. Explore the essential details of ownership and operation.
-                </p>
+                </FadeUp>
                 <div className="pt-8 hidden lg:block">
-                  <div className="w-24 h-[1px] bg-warm-gold/30" />
+                  <AnimatedLine className="w-24 opacity-30" delay={0.2} />
                 </div>
               </div>
 
@@ -1029,15 +1108,15 @@ export default function App() {
           <div className="luxury-container">
             <div className="text-center mb-16 space-y-8">
               <div className="space-y-6">
-                <span className="text-warm-gold text-[10px] tracking-[0.5em] uppercase font-bold">Contact</span>
+                <FadeUp className="text-warm-gold text-[10px] tracking-[0.5em] uppercase font-bold">Contact</FadeUp>
                 <h2 className="text-4xl md:text-6xl text-estate-navy tracking-tight leading-none font-serif">
-                  A Considered <br />
-                  <span className="italic text-warm-gold">Entry.</span>
+                  <SplitText>A Considered </SplitText>
+                  <SplitText className="italic text-warm-gold" delay={0.08}>Entry.</SplitText>
                 </h2>
               </div>
-              <p className="text-slate text-lg max-w-2xl mx-auto leading-relaxed">
+              <FadeUp delay={0.1} className="text-slate text-lg max-w-2xl mx-auto leading-relaxed">
                 When you're ready to learn more, we're ready to walk you through everything — clearly and at your pace.
-              </p>
+              </FadeUp>
               
               <div className="pt-4 pb-8 flex justify-center">
                 <a 
@@ -1063,7 +1142,7 @@ export default function App() {
             </div>
 
             <div className="max-w-2xl mx-auto space-y-12">
-              <div className="bg-white p-12 lg:p-16 shadow-2xl relative z-10 border border-stone/10">
+              <FadeIn delay={0.2}>
                 <form className="space-y-6">
                   <div className="w-full relative">
                     <input 
@@ -1099,7 +1178,7 @@ export default function App() {
                     </button>
                   </div>
                 </form>
-              </div>
+              </FadeIn>
 
               {/* Address Information */}
               <div className="text-center space-y-2 text-slate/80 font-serif">
@@ -1203,7 +1282,9 @@ export default function App() {
               style={{ 
                 fontSize: 'clamp(80px, 14vw, 220px)',
                 WebkitTextStroke: '1px rgba(255,255,255,0.06)',
-                backgroundImage: 'linear-gradient(135deg, rgba(201,169,110,0.15) 0%, rgba(255,255,255,0.04) 50%, rgba(201,169,110,0.08) 100%)',
+                backgroundImage: 'url(/footer-text-bg.jpg)',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
                 WebkitBackgroundClip: 'text',
                 backgroundClip: 'text',
               }}
