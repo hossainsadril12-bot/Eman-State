@@ -24,7 +24,8 @@ import {
   Share2,
   Coins,
   ShoppingBag,
-  Star
+  Star,
+  Check
 } from 'lucide-react';
 
 /* --- ANIMATION PRIMITIVES (Vivre-style) --- */
@@ -441,13 +442,13 @@ export default function App() {
                   <p className="text-white/90 text-xl md:text-2xl font-serif italic leading-relaxed">
                     A Hotel you don’t just stay in — <span className="not-italic font-sans text-xs tracking-[0.3em] uppercase">you own.</span>
                   </p>
-                  <p className="text-white/60 text-sm tracking-[0.2em] uppercase font-bold">
-                    Welcome to the elite class of ownership.
-                  </p>
                 </div>
 
-                <div className="mt-8">
-                  <div className="w-[1px] h-24 bg-gradient-to-b from-warm-gold to-transparent mx-auto" />
+                <div className="mt-12">
+                  <button className="px-10 py-5 border border-white/30 text-white text-[10px] tracking-[0.4em] uppercase font-bold flex items-center gap-4 hover:scale-105 hover:bg-white/5 hover:backdrop-blur-md hover:border-warm-gold transition-all duration-700 group cursor-pointer">
+                    <span>Explore Project</span>
+                    <Check className="w-4 h-4 text-warm-gold group-hover:scale-110 transition-transform" />
+                  </button>
                 </div>
               </motion.div>
             </div>
