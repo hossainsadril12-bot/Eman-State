@@ -1,9 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform, useMotionValueEvent } from 'motion/react';
-import { 
-  ArrowRight, 
-  ChevronDown, 
-  Phone, 
+import {
+  ArrowRight,
+  ChevronDown,
+  Phone,
   Menu,
   X,
   GraduationCap,
@@ -111,16 +111,16 @@ const staggerItemVariants = {
 
 /* --- UI COMPONENTS --- */
 
-const Button = ({ 
-  children, 
-  variant = 'primary', 
-  className = '', 
-  ...props 
-}: { 
-  children: React.ReactNode, 
-  variant?: 'primary' | 'secondary' | 'outline', 
-  className?: string, 
-  [key: string]: any 
+const Button = ({
+  children,
+  variant = 'primary',
+  className = '',
+  ...props
+}: {
+  children: React.ReactNode,
+  variant?: 'primary' | 'secondary' | 'outline',
+  className?: string,
+  [key: string]: any
 }) => {
   const base = "px-8 py-4 uppercase tracking-[0.2em] text-xs font-semibold transition-all duration-500 flex items-center gap-2 group cursor-pointer h-14";
   const styles = {
@@ -140,16 +140,16 @@ const Button = ({
 };
 
 const Card = ({ title, category, image, price }: any) => (
-  <motion.div 
+  <motion.div
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     className="bg-white border border-stone p-8 group cursor-pointer hover:shadow-luxury transition-all duration-700"
   >
     <div className="overflow-hidden mb-6 aspect-[4/5] bg-sand">
-      <img 
-        src={image} 
-        alt={title} 
+      <img
+        src={image}
+        alt={title}
         className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000"
         referrerPolicy="no-referrer"
       />
@@ -165,10 +165,10 @@ const Card = ({ title, category, image, price }: any) => (
 
 const FAQItem: React.FC<{ question: string, answer: string }> = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
-  
+
   return (
     <div className="border-b border-stone py-6">
-      <button 
+      <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex justify-between items-center text-left cursor-pointer"
       >
@@ -260,7 +260,7 @@ export default function App() {
   const heroRef = useRef(null);
   const aboutRef = useRef(null);
   const earnRef = useRef(null);
-  
+
   const { scrollY } = useScroll();
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -299,13 +299,13 @@ export default function App() {
   return (
     <div className="bg-white min-h-screen">
       {/* SCROLL-REACTIVE NAVIGATION */}
-      <motion.nav 
+      <motion.nav
         style={{ backgroundColor: navBg, backdropFilter: navBlur, borderBottomColor: navBorder }}
         className="fixed top-0 w-full z-50 transition-all duration-500"
       >
         {/* TOP BAR */}
         <div className="luxury-container h-24 flex items-center justify-between border-b border-white/10">
-          <motion.div 
+          <motion.div
             style={{ color: navText }}
             className="flex-1 flex items-center gap-4 cursor-pointer group"
             onClick={() => setIsMenuOpen(true)}
@@ -313,22 +313,22 @@ export default function App() {
             <Menu className="w-5 h-5" />
             <span className="text-[10px] tracking-[0.3em] uppercase font-bold hidden md:block">Menu</span>
           </motion.div>
-          
-          <motion.div 
+
+          <motion.div
             style={{ color: navText }}
             className="flex items-center gap-12"
           >
             <div className="flex flex-col items-center">
-              <motion.img 
-                src="/logo-white.svg" 
-                alt="Eman State Logo" 
+              <motion.img
+                src="/logo-white.svg"
+                alt="Eman State Logo"
                 style={{ filter: useTransform(scrollY, [0, 100], ["invert(0)", "invert(1)"]) }}
-                className="h-12 w-auto" 
+                className="h-12 w-auto"
               />
             </div>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             style={{ color: navText }}
             className="flex-1 flex justify-end items-center gap-8"
           >
@@ -360,7 +360,7 @@ export default function App() {
       {/* MOBILE MENU OVERLAY - No changes here */}
       <AnimatePresence>
         {isMenuOpen && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: '100%' }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: '100%' }}
@@ -376,15 +376,15 @@ export default function App() {
                 <X className="w-6 h-6" />
               </button>
             </div>
-            
+
             <div className="flex flex-col gap-8">
               {['The Residences', 'Private Viewing', 'Investment Atlas', 'Concierge Service', 'Inquire Now'].map((item, i) => (
-                <motion.a 
+                <motion.a
                   key={item}
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.1 * i }}
-                  href="#" 
+                  href="#"
                   className="text-4xl md:text-6xl font-serif hover:italic hover:text-warm-gold transition-all"
                 >
                   {item}
@@ -405,20 +405,20 @@ export default function App() {
         <section ref={heroRef} className="relative h-[200vh] overflow-visible">
           <div className="sticky top-0 h-screen w-full overflow-hidden">
             <motion.div style={{ scale: heroScale }} className="absolute inset-0">
-               <video 
-                 autoPlay 
-                 muted 
-                 loop 
-                 playsInline
-                 className="w-full h-full object-cover" 
-               >
-                 <source src="/hero-bg.mp4" type="video/mp4" />
-               </video>
-               {/* Deep Teal/Navy Overlay to match image */}
-               <div className="absolute inset-0 bg-[#0a192f]/80 mix-blend-multiply" />
-               <div className="absolute inset-0 bg-gradient-to-b from-[#0a192f]/50 via-transparent to-[#0a192f]/70" />
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="w-full h-full object-cover"
+              >
+                <source src="/hero-bg.mp4" type="video/mp4" />
+              </video>
+              {/* Deep Teal/Navy Overlay to match image */}
+              <div className="absolute inset-0 bg-[#0a192f]/80 mix-blend-multiply" />
+              <div className="absolute inset-0 bg-gradient-to-b from-[#0a192f]/50 via-transparent to-[#0a192f]/70" />
             </motion.div>
-            
+
             <div className="luxury-container relative z-10 h-full flex flex-col items-center justify-center text-center pt-48">
               <motion.div
                 style={{ opacity: heroOpacity, y: heroTextY }}
@@ -429,21 +429,21 @@ export default function App() {
               >
                 {/* Brand Area */}
                 <div className="mb-8 flex flex-col items-center">
-                   <h2 className="text-white text-3xl md:text-5xl tracking-[0.3em] uppercase font-serif mb-3">Velora Inani</h2>
-                   <p className="text-warm-gold text-[10px] md:text-xs tracking-[0.4em] uppercase font-bold opacity-90 italic">By Eiman Estates</p>
+                  <h2 className="text-white text-3xl md:text-5xl tracking-[0.3em] uppercase font-serif mb-3">Velora Inani</h2>
+                  <p className="text-warm-gold text-[10px] md:text-xs tracking-[0.4em] uppercase font-bold opacity-90 italic">By Eiman Estates</p>
                 </div>
-                
+
                 <h1 className="text-white text-5xl md:text-8xl lg:text-9xl leading-[1] mb-8 tracking-tight font-serif lowercase italic">
-                   Own What <span className="not-italic font-normal">Matters.</span>
+                  Own What <span className="not-italic font-normal">Matters.</span>
                 </h1>
 
                 <div className="space-y-6 max-w-2xl">
-                   <p className="text-white/90 text-xl md:text-2xl font-serif italic leading-relaxed">
-                      A place you don’t just stay in — <span className="not-italic font-sans text-xs tracking-[0.3em] uppercase">you own.</span>
-                   </p>
-                   <p className="text-white/60 text-sm tracking-[0.2em] uppercase font-bold">
-                      Welcome to the elite class of ownership.
-                   </p>
+                  <p className="text-white/90 text-xl md:text-2xl font-serif italic leading-relaxed">
+                    A Hotel you don’t just stay in — <span className="not-italic font-sans text-xs tracking-[0.3em] uppercase">you own.</span>
+                  </p>
+                  <p className="text-white/60 text-sm tracking-[0.2em] uppercase font-bold">
+                    Welcome to the elite class of ownership.
+                  </p>
                 </div>
 
                 <div className="mt-8">
@@ -452,7 +452,7 @@ export default function App() {
               </motion.div>
             </div>
 
-            <motion.div 
+            <motion.div
               style={{ opacity: heroOpacity }}
               className="absolute bottom-12 w-full flex flex-col items-center gap-4 text-white/40"
             >
@@ -464,11 +464,11 @@ export default function App() {
         {/* ABOUT SECTION → Seamless + Editorial Flow */}
         <section ref={aboutRef} className="relative z-20 bg-white -mt-[100vh] section-padding pt-[160px] pb-[160px] overflow-hidden">
           {/* Subtle Puzzle Pattern Background */}
-          <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
-               style={{ 
-                 backgroundImage: `url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0c0 5.523 4.477 10 10 10s10-4.477 10-10h20v20c-5.523 0-10 4.477-10 10s4.477 10 10 10v20h-20c0-5.523-4.477-10-10-10s-10 4.477-10 10h-20v-20c5.523 0 10-4.477 10-10s-4.477-10-10-10v-20h20z' fill='none' stroke='%23000' stroke-width='1'/%3E%3C/svg%3E")`,
-                 backgroundSize: '120px 120px'
-               }} 
+          <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0c0 5.523 4.477 10 10 10s10-4.477 10-10h20v20c-5.523 0-10 4.477-10 10s4.477 10 10 10v20h-20c0-5.523-4.477-10-10-10s-10 4.477-10 10h-20v-20c5.523 0 10-4.477 10-10s-4.477-10-10-10v-20h20z' fill='none' stroke='%23000' stroke-width='1'/%3E%3C/svg%3E")`,
+              backgroundSize: '120px 120px'
+            }}
           />
 
           <div className="luxury-container grid md:grid-cols-2 gap-24 items-center relative z-10">
@@ -482,12 +482,12 @@ export default function App() {
                   <SplitText className="italic text-warm-gold" delay={0.08}>Velora Inani</SplitText>
                 </h2>
               </div>
-              
+
               <div className="space-y-8">
                 <FadeUp delay={0.1} className="text-slate text-xl leading-relaxed font-light">
                   Velora Inani is a fully managed hotel development set along a quiet, elevated stretch of Inani's coastline where the hills meet the sea — away from the congestion of the main tourist corridor.
                 </FadeUp>
-                
+
                 <FadeUp delay={0.18} className="text-warm-gold text-lg font-serif italic border-l-2 border-warm-gold/30 pl-8">
                   A beachfront asset on Marine Drive, Cox's Bazar, designed for long-term ownership. A limited number of units are being offered in this first phase.
                 </FadeUp>
@@ -509,9 +509,9 @@ export default function App() {
                 className="absolute top-0 right-0 w-[50%] h-[70%] bg-sand overflow-hidden shadow-xl z-0"
               >
                 <FadeIn className="w-full h-full">
-                  <img 
-                    src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=800" 
-                    className="w-full h-full object-cover" 
+                  <img
+                    src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=800"
+                    className="w-full h-full object-cover"
                     alt="Destination"
                   />
                 </FadeIn>
@@ -523,9 +523,9 @@ export default function App() {
                 className="absolute top-[10%] left-0 w-[60%] aspect-square bg-sand overflow-hidden shadow-2xl z-10"
               >
                 <FadeIn delay={0.1} className="w-full h-full">
-                  <img 
-                    src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=80&w=800" 
-                    className="w-full h-full object-cover" 
+                  <img
+                    src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=80&w=800"
+                    className="w-full h-full object-cover"
                     alt="Experience"
                   />
                 </FadeIn>
@@ -537,9 +537,9 @@ export default function App() {
                 className="absolute top-[40%] left-[30%] w-[60%] aspect-[4/5] bg-sand overflow-hidden shadow-2xl z-20 border-4 border-white"
               >
                 <FadeIn delay={0.2} className="w-full h-full">
-                  <img 
-                    src="https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&q=80&w=800" 
-                    className="w-full h-full object-cover" 
+                  <img
+                    src="https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&q=80&w=800"
+                    className="w-full h-full object-cover"
                     alt="Relaxation"
                   />
                 </FadeIn>
@@ -552,8 +552,8 @@ export default function App() {
         <section className="section-padding bg-[#F9F7F4] relative overflow-hidden">
           {/* Architectural Full-Page Background */}
           <div className="absolute inset-0 opacity-[0.1] pointer-events-none">
-            <img 
-              src="/bosunia-bg.png" 
+            <img
+              src="/bosunia-bg.png"
               className="w-full h-full object-cover"
               alt="Architectural Pattern Background"
             />
@@ -563,8 +563,8 @@ export default function App() {
             {/* Portrait Column */}
             <FadeIn className="lg:col-span-5 relative">
               <div className="aspect-[4/5] bg-sand overflow-hidden shadow-2xl relative z-10">
-                <img 
-                  src="/prof-portrait.jpg" 
+                <img
+                  src="/prof-portrait.jpg"
                   className="w-full h-full object-cover transition-all duration-1000"
                   alt="Prof. Dr. M Shamim Z Bosunia"
                   referrerPolicy="no-referrer"
@@ -594,23 +594,23 @@ export default function App() {
 
               <div className="space-y-8 pt-6 border-t border-stone/30 max-w-xl">
                 {[
-                  { 
-                    label: 'Former Dean', 
+                  {
+                    label: 'Former Dean',
                     sub: 'Faculty of Civil Engineering, BUET',
-                    icon: <GraduationCap className="w-6 h-6" /> 
+                    icon: <GraduationCap className="w-6 h-6" />
                   },
-                  { 
-                    label: 'President', 
+                  {
+                    label: 'President',
                     sub: 'Bangladesh Association of Consulting Engineers (BACE)',
-                    icon: <Users className="w-6 h-6" /> 
+                    icon: <Users className="w-6 h-6" />
                   },
-                  { 
-                    label: 'Chairman', 
+                  {
+                    label: 'Chairman',
                     sub: 'Government-appointed Panel of Experts for Padma Multipurpose Bridge and Karnaphuli Tunnel',
-                    icon: <Landmark className="w-6 h-6" /> 
+                    icon: <Landmark className="w-6 h-6" />
                   }
                 ].map((item, idx) => (
-                  <motion.div 
+                  <motion.div
                     key={item.label}
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -635,16 +635,16 @@ export default function App() {
         <section className="h-[80vh] flex items-center justify-center overflow-hidden bg-sand relative border-y border-stone/20">
           {/* Background Image Layer */}
           <div className="absolute inset-0 z-0">
-            <img 
-              src="/breather-bg.jpg" 
-              className="w-full h-full object-cover opacity-15 saturate-[0.8]" 
+            <img
+              src="/breather-bg.jpg"
+              className="w-full h-full object-cover opacity-15 saturate-[0.8]"
               alt="Background Atmosphere"
             />
           </div>
 
-          <motion.div 
+          <motion.div
             className="absolute inset-0 opacity-20 pointer-events-none z-1"
-            animate={{ 
+            animate={{
               background: [
                 "radial-gradient(circle at 20% 30%, #C9A96E 0%, transparent 70%)",
                 "radial-gradient(circle at 80% 70%, #C9A96E 0%, transparent 70%)",
@@ -653,7 +653,7 @@ export default function App() {
             }}
             transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
           />
-          
+
           <div className="luxury-container text-center relative z-10">
             <motion.div
               initial={{ opacity: 0, scale: 1.1 }}
@@ -664,7 +664,7 @@ export default function App() {
               <h2 className="text-2xl md:text-5xl font-serif text-estate-navy lowercase tracking-tight leading-relaxed italic max-w-4xl mx-auto">
                 "A decision like this <span className="text-warm-gold not-italic font-sans text-sm tracking-[0.3em] uppercase align-middle mx-4">deserves</span> clarity, not pressure."
               </h2>
-              <motion.div 
+              <motion.div
                 initial={{ width: 0 }}
                 whileInView={{ width: "100px" }}
                 transition={{ delay: 1, duration: 1.5 }}
@@ -682,7 +682,6 @@ export default function App() {
           <div className="luxury-container">
             {/* Header: Centered first */}
             <div className="mb-24 space-y-6">
-              <FadeUp className="text-warm-gold text-[10px] tracking-[0.4em] uppercase font-bold">4A — The Asset</FadeUp>
               <h2 className="text-4xl lg:text-8xl text-estate-navy tracking-tighter leading-[0.9]">
                 <SplitText>What You </SplitText>
                 <SplitText className="italic text-warm-gold" delay={0.1}>Own.</SplitText>
@@ -691,7 +690,7 @@ export default function App() {
 
             <div className="space-y-32">
               {/* Introduction Text */}
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -733,7 +732,7 @@ export default function App() {
                     description: "Full title rights to your asset, allowing you to hold, transfer, or bequeath it subject to the terms of your ownership agreement, just like any other private residence."
                   }
                 ].map((item, idx) => (
-                  <motion.div 
+                  <motion.div
                     key={item.title}
                     variants={staggerItemVariants}
                     className="flex flex-col h-full bg-[#FBF9F6] border border-stone/20 p-10 lg:p-12 hover:border-warm-gold transition-all duration-700 hover:shadow-2xl hover:shadow-warm-gold/5 group"
@@ -742,7 +741,7 @@ export default function App() {
                       <div className="p-4 bg-white border border-stone/10 text-warm-gold shadow-sm group-hover:bg-estate-navy group-hover:text-white transition-all duration-500">
                         {item.icon}
                       </div>
-                      <span className="font-serif text-5xl italic text-stone/20 group-hover:text-warm-gold/20 transition-colors">0{idx +1}</span>
+                      <span className="font-serif text-5xl italic text-stone/20 group-hover:text-warm-gold/20 transition-colors">0{idx + 1}</span>
                     </div>
 
                     <div className="space-y-4 mb-8">
@@ -753,7 +752,7 @@ export default function App() {
                     </div>
 
                     <div className="bg-white p-4 border-l-2 border-warm-gold mb-8">
-                       <p className="text-estate-navy font-bold text-[9px] tracking-widest uppercase">
+                      <p className="text-estate-navy font-bold text-[9px] tracking-widest uppercase">
                         → {item.summary}
                       </p>
                     </div>
@@ -761,9 +760,9 @@ export default function App() {
                     <p className="text-mist text-base leading-relaxed font-light flex-grow">
                       {item.description}
                     </p>
-                    
+
                     <div className="mt-12 pt-8 border-t border-stone/20 overflow-hidden">
-                      <motion.div 
+                      <motion.div
                         initial={{ x: "-100%" }}
                         whileInView={{ x: 0 }}
                         transition={{ duration: 1.5, ease: "circOut" }}
@@ -775,7 +774,7 @@ export default function App() {
               </motion.div>
 
               {/* Closing statement block */}
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
@@ -784,12 +783,12 @@ export default function App() {
                 <div className="bg-estate-navy text-white p-12 lg:p-24 relative overflow-hidden group">
                   {/* Geometric floating element */}
                   <div className="absolute top-0 right-0 w-96 h-96 bg-warm-gold/[0.03] -translate-y-1/2 translate-x-1/2 rotate-45 border border-white/5 pointer-events-none" />
-                  
+
                   <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-16 relative z-10">
                     <p className="font-serif italic text-3xl lg:text-5xl leading-[1.2] max-w-3xl">
                       "You own the asset. <span className="text-warm-gold not-italic">Eiman Estates runs the business</span> to protect the value of every owner's investment."
                     </p>
-                    
+
                     <div className="flex flex-col sm:flex-row gap-8 items-center lg:shrink-0">
                       <Button className="!bg-warm-gold !text-estate-navy border-none h-16 px-10 text-sm font-bold uppercase tracking-widest hover:scale-105 transition-all">Request Legal Dossier</Button>
                       <p className="text-mist text-[10px] tracking-[0.2em] uppercase font-bold opacity-60 text-center lg:text-left">Verified Ownership <br /> Structure</p>
@@ -815,49 +814,49 @@ export default function App() {
               <div className="relative hidden lg:block h-[70vh] aspect-[4/5] overflow-hidden rounded-sm shadow-2xl bg-sand">
                 <AnimatePresence mode="wait">
                   {earnStep === 0 && (
-                    <motion.img 
+                    <motion.img
                       key="img0"
                       initial={{ opacity: 0, scale: 1.05 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.98 }}
                       transition={{ duration: 0.8, ease: "circOut" }}
-                      src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&q=80&w=1200" 
+                      src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&q=80&w=1200"
                       className="absolute inset-0 w-full h-full object-cover"
                       alt="Income Generation"
                     />
                   )}
                   {earnStep === 1 && (
-                    <motion.img 
+                    <motion.img
                       key="img1"
                       initial={{ opacity: 0, scale: 1.05 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.98 }}
                       transition={{ duration: 0.8, ease: "circOut" }}
-                      src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&q=80&w=1200" 
+                      src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&q=80&w=1200"
                       className="absolute inset-0 w-full h-full object-cover"
                       alt="Revenue Pool"
                     />
                   )}
                   {earnStep === 2 && (
-                    <motion.img 
+                    <motion.img
                       key="img2"
                       initial={{ opacity: 0, scale: 1.05 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.98 }}
                       transition={{ duration: 0.8, ease: "circOut" }}
-                      src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=1200" 
+                      src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=1200"
                       className="absolute inset-0 w-full h-full object-cover"
                       alt="Operations"
                     />
                   )}
                   {earnStep === 3 && (
-                    <motion.img 
+                    <motion.img
                       key="img3"
                       initial={{ opacity: 0, scale: 1.05 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.98 }}
                       transition={{ duration: 0.8, ease: "circOut" }}
-                      src="https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&q=80&w=1200" 
+                      src="https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&q=80&w=1200"
                       className="absolute inset-0 w-full h-full object-cover"
                       alt="Yield Distribution"
                     />
@@ -873,7 +872,6 @@ export default function App() {
               {/* Right Side: Narrative Content Panels */}
               <div className="relative h-[80vh] flex flex-col justify-center">
                 <div className="mb-20">
-                  <p className="text-warm-gold text-[10px] tracking-[0.5em] uppercase font-bold mb-4">Income</p>
                   <h2 className="text-5xl md:text-7xl text-estate-navy tracking-tight leading-none mb-8 font-serif">
                     How you <span className="italic">earn</span>
                   </h2>
@@ -889,7 +887,7 @@ export default function App() {
 
                 <div className="relative h-[400px]">
                   <AnimatePresence mode="popLayout">
-                    <motion.div 
+                    <motion.div
                       key={earnStep}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -910,7 +908,7 @@ export default function App() {
                         {[
                           "from rooms, food and beverage, events, and all guest services",
                           "across the property",
-                          "", 
+                          "",
                           "to unit owners in proportion to their unit's size relative to the total hotel"
                         ][earnStep]}
                       </p>
@@ -922,9 +920,9 @@ export default function App() {
                 <div className="pt-12 relative z-10">
                   <div className="flex gap-4">
                     {[0, 1, 2, 3].map((s) => (
-                      <div 
-                        key={s} 
-                        className={`h-1 flex-1 transition-all duration-700 ${s <= earnStep ? 'bg-warm-gold' : 'bg-stone/20'}`} 
+                      <div
+                        key={s}
+                        className={`h-1 flex-1 transition-all duration-700 ${s <= earnStep ? 'bg-warm-gold' : 'bg-stone/20'}`}
                       />
                     ))}
                   </div>
@@ -937,14 +935,14 @@ export default function App() {
         {/* THE EQUITY MODEL → Cinematic Immersive Section */}
         <section className="relative h-screen min-h-[700px] flex items-center overflow-hidden bg-estate-navy">
           {/* Background Image with Parallax-like scale effect */}
-          <motion.div 
+          <motion.div
             initial={{ scale: 1.1 }}
             whileInView={{ scale: 1 }}
             transition={{ duration: 10, ease: "linear" }}
             className="absolute inset-0 z-0"
           >
-            <img 
-              src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=2000" 
+            <img
+              src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=2000"
               className="w-full h-full object-cover opacity-60 saturate-[0.8]"
               alt="Aerial Coastal View"
               referrerPolicy="no-referrer"
@@ -962,7 +960,7 @@ export default function App() {
               >
                 <div className="space-y-4">
                   <FadeUp className="text-warm-gold text-[10px] tracking-[0.5em] uppercase font-bold block">The Equity Model</FadeUp>
-                  <h2 className="text-5xl md:text-8xl text-white tracking-tighter leading-[0.9] font-serif">
+                  <h2 className="text-4xl md:text-6xl text-white tracking-tighter leading-[0.9] font-serif">
                     <SplitText>Ownership </SplitText>
                     <SplitText className="italic" delay={0.08}>You Can Share</SplitText>
                   </h2>
@@ -984,7 +982,7 @@ export default function App() {
                 <p className="text-white/80 text-lg leading-relaxed max-w-lg">
                   As a primary unit owner, you can introduce additional participants — family, partners, or trusted associates — each holding a documented fractional interest. You remain the registered owner. All participation is structured, documented, and managed under the oversight of Eiman Estates.
                 </p>
-                
+
                 <p className="text-warm-gold text-lg font-serif italic border-l border-warm-gold pl-6">
                   This makes Velora Inani not just a personal investment, but one you can share on your terms.
                 </p>
@@ -1024,7 +1022,7 @@ export default function App() {
                   <p className="text-warm-gold text-xl lg:text-2xl font-serif italic leading-relaxed border-l-2 border-warm-gold pl-6">
                     "Velora Inani is the first development by Eiman Estates — founded by a group of entrepreneurs with experience across real estate development, healthcare operations, manufacturing, and technology, including hospitality management software."
                   </p>
-                  
+
                   <div className="space-y-6 text-mist text-base lg:text-lg leading-relaxed">
                     <p>
                       When you invest in Velora Inani, you don't manage tenants. You don't coordinate maintenance. You don't negotiate rates or handle compliance. That's our job — and it's the only job we do.
@@ -1055,7 +1053,7 @@ export default function App() {
                 className="relative lg:pl-12"
               >
                 <div className="aspect-[4/5] relative overflow-hidden shadow-[0_20px_50px_rgba(27,35,65,0.1)] group">
-                  <img 
+                  <img
                     src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80&w=1200"
                     alt="Eiman Estates Architecture"
                     className="absolute inset-0 w-full h-full object-cover grayscale transition-all duration-1000 group-hover:scale-105 group-hover:grayscale-0"
@@ -1063,7 +1061,7 @@ export default function App() {
                   />
                   <div className="absolute inset-0 ring-1 ring-inset ring-white/30 m-6 pointer-events-none" />
                 </div>
-                
+
                 {/* Decorative Element */}
                 <div className="absolute -bottom-10 -left-10 w-48 h-48 border border-warm-gold/20 rounded-full flex items-center justify-center pointer-events-none hidden md:flex">
                   <div className="w-32 h-32 border border-warm-gold/10 rounded-full" />
@@ -1120,20 +1118,20 @@ export default function App() {
               <FadeUp delay={0.1} className="text-slate text-lg max-w-2xl mx-auto leading-relaxed">
                 When you're ready to learn more, we're ready to walk you through everything — clearly and at your pace.
               </FadeUp>
-              
+
               <div className="pt-4 pb-8 flex justify-center">
-                <a 
-                  href="#" 
+                <a
+                  href="#"
                   className="bg-[#25D366] text-white px-10 py-5 rounded-full shadow-[0_0_30px_rgba(37,211,102,0.4)] hover:shadow-[0_0_50px_rgba(37,211,102,0.6)] hover:scale-105 transition-all duration-500 flex items-center gap-4 animate-pulse inline-flex"
                 >
-                  <svg 
-                    viewBox="0 0 24 24" 
-                    width="24" 
-                    height="24" 
-                    stroke="currentColor" 
-                    strokeWidth="2" 
-                    fill="none" 
-                    strokeLinecap="round" 
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="24"
+                    height="24"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    fill="none"
+                    strokeLinecap="round"
                     strokeLinejoin="round"
                     className="w-8 h-8"
                   >
@@ -1149,31 +1147,31 @@ export default function App() {
                 <form className="space-y-6">
                   <div className="w-full relative">
                     <User className="absolute left-0 top-1/2 -translate-y-1/2 w-5 h-5 text-warm-gold/60" />
-                    <input 
-                      type="text" 
-                      placeholder="Your Name" 
+                    <input
+                      type="text"
+                      placeholder="Your Name"
                       className="w-full bg-transparent border-b border-stone/30 py-4 pl-10 text-estate-navy text-lg outline-none placeholder:text-stone transition-all duration-300 focus:border-warm-gold focus:py-6"
                     />
                   </div>
                   <div className="w-full relative">
                     <Mail className="absolute left-0 top-1/2 -translate-y-1/2 w-5 h-5 text-warm-gold/60" />
-                    <input 
-                      type="email" 
-                      placeholder="Private Email" 
+                    <input
+                      type="email"
+                      placeholder="Private Email"
                       className="w-full bg-transparent border-b border-stone/30 py-4 pl-10 text-estate-navy text-lg outline-none placeholder:text-stone transition-all duration-300 focus:border-warm-gold focus:py-6"
                     />
                   </div>
                   <div className="w-full relative">
                     <Phone className="absolute left-0 top-1/2 -translate-y-1/2 w-5 h-5 text-warm-gold/60" />
-                    <input 
-                      type="tel" 
-                      placeholder="Phone Details" 
+                    <input
+                      type="tel"
+                      placeholder="Phone Details"
                       className="w-full bg-transparent border-b border-stone/30 py-4 pl-10 text-estate-navy text-lg outline-none placeholder:text-stone transition-all duration-300 focus:border-warm-gold focus:py-6"
                     />
                   </div>
                   <div className="w-full relative">
                     <MessageSquare className="absolute left-0 top-8 w-5 h-5 text-warm-gold/60" />
-                    <textarea 
+                    <textarea
                       placeholder="Message"
                       rows={3}
                       className="w-full bg-transparent border-b border-stone/30 py-4 pl-10 text-estate-navy text-lg outline-none placeholder:text-stone transition-all duration-300 focus:border-warm-gold focus:py-6 resize-none"
@@ -1203,16 +1201,16 @@ export default function App() {
 
       {/* FOOTER */}
       <footer className="bg-estate-navy text-white relative overflow-hidden">
-        
+
         {/* Top Footer Grid */}
         <div className="luxury-container pt-20 pb-16 grid grid-cols-1 md:grid-cols-3 gap-16 border-b border-white/10 relative z-10">
-          
+
           {/* LEFT: CTA Column */}
           <div className="space-y-8">
             <p className="text-3xl md:text-4xl font-serif leading-tight text-white">
               We develop real estate assets built on ownership clarity, <span className="italic text-warm-gold">operational discipline</span>, and long-term trust.
             </p>
-            <a 
+            <a
               href="#contact"
               className="inline-flex items-center gap-3 border border-white/30 text-white text-[10px] tracking-[0.3em] uppercase font-bold px-6 py-4 hover:bg-warm-gold hover:text-estate-navy hover:border-warm-gold transition-all duration-500 group"
             >
@@ -1230,9 +1228,9 @@ export default function App() {
           <div className="space-y-6 md:pt-2">
             <p className="text-warm-gold text-[10px] tracking-[0.4em] uppercase font-bold mb-8">Navigate</p>
             {['About Us', 'Ownership', 'The Project', 'Location', 'Registry', 'Gallery', 'Contact'].map((link) => (
-              <a 
+              <a
                 key={link}
-                href="#" 
+                href="#"
                 className="block text-white/70 text-base font-serif italic hover:text-warm-gold hover:translate-x-2 transition-all duration-300"
               >
                 {link}
@@ -1263,13 +1261,13 @@ export default function App() {
               {/* Instagram */}
               <a href="#" className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:border-warm-gold hover:text-warm-gold transition-all duration-300 text-white/60">
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" /><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
                 </svg>
               </a>
               {/* WhatsApp */}
               <a href="#" className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:border-warm-gold hover:text-warm-gold transition-all duration-300 text-white/60">
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
                 </svg>
               </a>
             </div>
@@ -1284,9 +1282,9 @@ export default function App() {
         {/* BOTTOM: Giant Brand Watermark */}
         <div className="relative overflow-hidden select-none pointer-events-none" style={{ height: 'clamp(120px, 18vw, 260px)' }}>
           <div className="absolute inset-0 flex items-center justify-center">
-            <span 
+            <span
               className="font-serif font-bold uppercase tracking-[0.05em] text-transparent leading-none whitespace-nowrap"
-              style={{ 
+              style={{
                 fontSize: 'clamp(80px, 14vw, 220px)',
                 WebkitTextStroke: '1px rgba(255,255,255,0.06)',
                 backgroundImage: 'url(/footer-text-bg.jpg)',
