@@ -730,7 +730,7 @@ export default function App() {
                 variants={staggerContainerVariants}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, margin: "-60px" }}
+                viewport={{ once: true, amount: 0.2 }}
               >
                 {[
                   {
