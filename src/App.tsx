@@ -8,6 +8,9 @@ import {
   X,
   GraduationCap,
   Users,
+  User,
+  Mail,
+  MessageSquare,
   Landmark,
   Waves,
   Sunset,
@@ -1142,34 +1145,38 @@ export default function App() {
             </div>
 
             <div className="max-w-2xl mx-auto space-y-12">
-              <FadeIn delay={0.2}>
+              <FadeIn delay={0.2} className="bg-white p-12 lg:p-16 shadow-2xl relative z-10 border border-stone/10">
                 <form className="space-y-6">
                   <div className="w-full relative">
+                    <User className="absolute left-0 top-1/2 -translate-y-1/2 w-5 h-5 text-warm-gold/60" />
                     <input 
                       type="text" 
                       placeholder="Your Name" 
-                      className="w-full bg-transparent border-b border-stone/30 py-4 text-estate-navy text-lg outline-none placeholder:text-stone transition-all duration-300 focus:border-warm-gold focus:py-6"
+                      className="w-full bg-transparent border-b border-stone/30 py-4 pl-10 text-estate-navy text-lg outline-none placeholder:text-stone transition-all duration-300 focus:border-warm-gold focus:py-6"
                     />
                   </div>
                   <div className="w-full relative">
+                    <Mail className="absolute left-0 top-1/2 -translate-y-1/2 w-5 h-5 text-warm-gold/60" />
                     <input 
                       type="email" 
                       placeholder="Private Email" 
-                      className="w-full bg-transparent border-b border-stone/30 py-4 text-estate-navy text-lg outline-none placeholder:text-stone transition-all duration-300 focus:border-warm-gold focus:py-6"
+                      className="w-full bg-transparent border-b border-stone/30 py-4 pl-10 text-estate-navy text-lg outline-none placeholder:text-stone transition-all duration-300 focus:border-warm-gold focus:py-6"
                     />
                   </div>
                   <div className="w-full relative">
+                    <Phone className="absolute left-0 top-1/2 -translate-y-1/2 w-5 h-5 text-warm-gold/60" />
                     <input 
                       type="tel" 
                       placeholder="Phone Details" 
-                      className="w-full bg-transparent border-b border-stone/30 py-4 text-estate-navy text-lg outline-none placeholder:text-stone transition-all duration-300 focus:border-warm-gold focus:py-6"
+                      className="w-full bg-transparent border-b border-stone/30 py-4 pl-10 text-estate-navy text-lg outline-none placeholder:text-stone transition-all duration-300 focus:border-warm-gold focus:py-6"
                     />
                   </div>
                   <div className="w-full relative">
+                    <MessageSquare className="absolute left-0 top-8 w-5 h-5 text-warm-gold/60" />
                     <textarea 
                       placeholder="Message"
                       rows={3}
-                      className="w-full bg-transparent border-b border-stone/30 py-4 text-estate-navy text-lg outline-none placeholder:text-stone transition-all duration-300 focus:border-warm-gold focus:py-6 resize-none"
+                      className="w-full bg-transparent border-b border-stone/30 py-4 pl-10 text-estate-navy text-lg outline-none placeholder:text-stone transition-all duration-300 focus:border-warm-gold focus:py-6 resize-none"
                     ></textarea>
                   </div>
                   <div className="pt-8">
