@@ -1139,7 +1139,7 @@ export default function App() {
               <FadeIn delay={0.2} className="bg-white p-12 lg:p-16 shadow-2xl relative z-10 border border-stone/10">
                 <form className="space-y-6">
                   <div className="w-full relative">
-                    <User className="absolute left-0 top-1/2 -translate-y-1/2 w-5 h-5 text-warm-gold/60" />
+                    <User className="absolute left-0 top-1/2 -translate-y-1/2 w-5 h-5 text-[#B28F4F]" />
                     <input
                       type="text"
                       placeholder="Your Name"
@@ -1147,7 +1147,7 @@ export default function App() {
                     />
                   </div>
                   <div className="w-full relative">
-                    <Mail className="absolute left-0 top-1/2 -translate-y-1/2 w-5 h-5 text-warm-gold/60" />
+                    <Mail className="absolute left-0 top-1/2 -translate-y-1/2 w-5 h-5 text-[#B28F4F]" />
                     <input
                       type="email"
                       placeholder="Private Email"
@@ -1155,7 +1155,7 @@ export default function App() {
                     />
                   </div>
                   <div className="w-full relative">
-                    <Phone className="absolute left-0 top-1/2 -translate-y-1/2 w-5 h-5 text-warm-gold/60" />
+                    <Phone className="absolute left-0 top-1/2 -translate-y-1/2 w-5 h-5 text-[#B28F4F]" />
                     <input
                       type="tel"
                       placeholder="Phone Details"
@@ -1163,7 +1163,7 @@ export default function App() {
                     />
                   </div>
                   <div className="w-full relative">
-                    <MessageSquare className="absolute left-0 top-8 w-5 h-5 text-warm-gold/60" />
+                    <MessageSquare className="absolute left-0 top-8 w-5 h-5 text-[#B28F4F]" />
                     <textarea
                       placeholder="Message"
                       rows={3}
