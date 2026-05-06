@@ -1115,7 +1115,7 @@ export default function App() {
               <div className="pt-4 pb-8 flex justify-center">
                 <a
                   href="#"
-                  className="bg-[#25D366] text-white px-10 py-5 rounded-full shadow-[0_0_30px_rgba(37,211,102,0.4)] hover:shadow-[0_0_50px_rgba(37,211,102,0.6)] hover:scale-105 transition-all duration-500 flex items-center gap-4 animate-pulse inline-flex"
+                  className="bg-estate-navy text-white px-10 py-5 rounded-none hover:bg-warm-gold hover:text-estate-navy transition-all duration-500 flex items-center gap-4 inline-flex group shadow-xl hover:shadow-2xl"
                 >
                   <svg
                     viewBox="0 0 24 24"
