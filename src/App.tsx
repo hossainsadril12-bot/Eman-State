@@ -28,15 +28,15 @@ import {
   Check
 } from 'lucide-react';
 
-/* --- ANIMATION PRIMITIVES (Vivre-style) --- */
+/* --- ANIMATION PRIMITIVES (UIBlockify-inspired Blur Reveal) --- */
 
-const splitVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.018 } },
-};
+// Easing curve matching UIBlockify's smooth, premium feel
+const ease = [0.16, 1, 0.3, 1];
+
+// ---- SplitText: char-by-char reveal with clip ----
 const charVariants = {
   hidden: { y: '110%', opacity: 0 },
-  visible: { y: '0%', opacity: 1, transition: { duration: 0.75, ease: [0.16, 1, 0.3, 1] } },
+  visible: { y: '0%', opacity: 1, transition: { duration: 0.75, ease } },
 };
 
 const SplitText = ({ children, className = '', delay = 0 }: { children: string; className?: string; delay?: number }) => (
@@ -56,11 +56,51 @@ const SplitText = ({ children, className = '', delay = 0 }: { children: string; 
   </motion.span>
 );
 
+// ---- WordReveal: word-by-word blur+slide (UIBlockify signature heading effect) ----
+const wordRevealVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.1 } },
+};
+const wordVariants = {
+  hidden: { opacity: 0, y: 24, filter: 'blur(10px)' },
+  visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.7, ease } },
+};
+
+const WordReveal = ({ children, className = '', delay = 0 }: { children: string; className?: string; delay?: number }) => (
+  <motion.span
+    className={`inline-block ${className}`}
+    variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1, delayChildren: delay } } }}
+    initial="hidden"
+    whileInView="visible"
+    viewport={{ once: true, margin: '-60px' }}
+  >
+    {children.split(' ').map((word, i) => (
+      <motion.span key={i} variants={wordVariants} style={{ display: 'inline-block', marginRight: '0.3em' }}>
+        {word}
+      </motion.span>
+    ))}
+  </motion.span>
+);
+
+// ---- BlurReveal: the signature UIBlockify blur-fade-slide for body text & labels ----
+const BlurReveal = ({ children, className = '', delay = 0, duration = 0.8 }: { children: React.ReactNode; className?: string; delay?: number; duration?: number }) => (
+  <motion.div
+    className={className}
+    initial={{ opacity: 0, y: 20, filter: 'blur(12px)' }}
+    whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+    transition={{ duration, ease, delay }}
+    viewport={{ once: true, margin: '-50px' }}
+  >
+    {children}
+  </motion.div>
+);
+
+// ---- FadeUp: enhanced with blur ----
 const fadeUpVariants = {
-  hidden: { opacity: 0, y: 32 },
+  hidden: { opacity: 0, y: 32, filter: 'blur(8px)' },
   visible: (delay: number = 0) => ({
-    opacity: 1, y: 0,
-    transition: { duration: 0.85, ease: [0.16, 1, 0.3, 1], delay },
+    opacity: 1, y: 0, filter: 'blur(0px)',
+    transition: { duration: 0.85, ease, delay },
   }),
 };
 
@@ -78,37 +118,53 @@ const FadeUp = ({ children, className = '', delay = 0, as: Tag = 'div' }: { chil
   </motion.div>
 );
 
+// ---- FadeIn: scale + blur entrance for images and cards ----
 const FadeIn = ({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => (
   <motion.div
     className={className}
-    initial={{ opacity: 0, scale: 1.04 }}
-    whileInView={{ opacity: 1, scale: 1 }}
-    transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay }}
+    initial={{ opacity: 0, scale: 1.04, filter: 'blur(8px)' }}
+    whileInView={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+    transition={{ duration: 1.1, ease, delay }}
     viewport={{ once: true, margin: '-60px' }}
   >
     {children}
   </motion.div>
 );
 
+// ---- SlideIn: horizontal slide-in for side elements ----
+const SlideIn = ({ children, className = '', delay = 0, from = 'left' }: { children: React.ReactNode; className?: string; delay?: number; from?: 'left' | 'right' }) => (
+  <motion.div
+    className={className}
+    initial={{ opacity: 0, x: from === 'left' ? -50 : 50, filter: 'blur(10px)' }}
+    whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+    transition={{ duration: 0.9, ease, delay }}
+    viewport={{ once: true, margin: '-50px' }}
+  >
+    {children}
+  </motion.div>
+);
+
+// ---- AnimatedLine ----
 const AnimatedLine = ({ className = '', delay = 0 }: { className?: string; delay?: number }) => (
   <motion.div
     className={`h-[1px] bg-warm-gold origin-left ${className}`}
     initial={{ scaleX: 0, opacity: 0 }}
     whileInView={{ scaleX: 1, opacity: 1 }}
-    transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay }}
+    transition={{ duration: 1.2, ease, delay }}
     viewport={{ once: true, margin: '-60px' }}
   />
-
 );
 
+// ---- Stagger container + item (with blur) ----
 const staggerContainerVariants = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.12 } },
+  visible: { transition: { staggerChildren: 0.1 } },
 };
 const staggerItemVariants = {
-  hidden: { opacity: 0, y: 36 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.85, ease: [0.16, 1, 0.3, 1] } },
+  hidden: { opacity: 0, y: 36, filter: 'blur(8px)' },
+  visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.85, ease } },
 };
+
 
 /* --- UI COMPONENTS --- */
 
@@ -488,11 +544,11 @@ export default function App() {
           />
 
           <div className="luxury-container grid md:grid-cols-2 gap-24 items-center relative z-10">
-            <div className="space-y-10 max-w-[600px]">
+            <SlideIn from="left" className="space-y-10 max-w-[600px]">
               <div className="space-y-4">
-                <FadeUp className="text-mist text-[10px] tracking-[0.4em] uppercase font-bold">
+                <BlurReveal className="text-mist text-[10px] tracking-[0.4em] uppercase font-bold">
                   ABOUT THE PROJECT
-                </FadeUp>
+                </BlurReveal>
                 <h2 className="text-4xl lg:text-7xl text-estate-navy tracking-tight leading-[1.1]">
                   <SplitText>About </SplitText>
                   <SplitText className="italic text-warm-gold" delay={0.08}>Velora Inani</SplitText>
@@ -500,23 +556,23 @@ export default function App() {
               </div>
 
               <div className="space-y-8">
-                <FadeUp delay={0.1} className="text-slate text-xl leading-relaxed font-light">
+                <BlurReveal delay={0.1} className="text-slate text-xl leading-relaxed font-light">
                   Velora Inani is a fully managed hotel development set along a quiet, elevated stretch of Inani's coastline where the hills meet the sea - away from the congestion of the main tourist corridor.
-                </FadeUp>
+                </BlurReveal>
 
-                <FadeUp delay={0.18} className="text-warm-gold text-lg font-serif italic border-l-2 border-warm-gold/30 pl-8">
+                <BlurReveal delay={0.2} className="text-warm-gold text-lg font-serif italic border-l-2 border-warm-gold/30 pl-8">
                   A beachfront asset on Marine Drive, Cox's Bazar, designed for long-term ownership. A limited number of units are being offered in this first phase.
-                </FadeUp>
+                </BlurReveal>
 
-                <p className="text-mist text-base leading-relaxed">
-                  The project is designed by <span className="text-estate-navy font-semibold">HuaDu Architecture & Urban Design (HDD)</span>, a Shanghai-based firm whose portfolio spans three continents, including the Beijing Sunrise East Kempinski Hotel. HDD is responsible for the architectural, structural, MEP, and interior design of Velora Inani.
-                </p>
+                <BlurReveal delay={0.3} className="text-mist text-base leading-relaxed">
+                  The project is designed by <span className="text-estate-navy font-semibold">HuaDu Architecture &amp; Urban Design (HDD)</span>, a Shanghai-based firm whose portfolio spans three continents, including the Beijing Sunrise East Kempinski Hotel. HDD is responsible for the architectural, structural, MEP, and interior design of Velora Inani.
+                </BlurReveal>
               </div>
 
-              <FadeUp delay={0.32} className="pt-8">
+              <BlurReveal delay={0.4} className="pt-8">
                 <Button variant="secondary">The Vision Dossier</Button>
-              </FadeUp>
-            </div>
+              </BlurReveal>
+            </SlideIn>
 
             <div className="relative h-[650px] w-full">
               {/* Image 2: Beach Sunset (Top Right) - Further back */}
@@ -591,21 +647,21 @@ export default function App() {
             </FadeIn>
 
             {/* Content Column */}
-            <div className="lg:col-span-7 space-y-10">
+            <SlideIn from="right" className="lg:col-span-7 space-y-10">
               <div className="space-y-6">
                 <div className="space-y-4">
-                  <FadeUp className="text-estate-navy text-[10px] tracking-[0.4em] uppercase font-bold opacity-80">
+                  <BlurReveal className="text-estate-navy text-[10px] tracking-[0.4em] uppercase font-bold opacity-80">
                     STRUCTURAL ADVISORY IS LED BY
-                  </FadeUp>
+                  </BlurReveal>
                   <AnimatedLine className="w-16" delay={0.2} />
                 </div>
                 <h2 className="text-4xl lg:text-5xl text-estate-navy font-serif leading-tight">
                   <SplitText>Prof. Dr. M </SplitText>
                   <SplitText className="italic" delay={0.1}>Shamim Z Bosunia</SplitText>
                 </h2>
-                <FadeUp delay={0.15} className="text-slate text-lg leading-relaxed max-w-2xl font-light">
+                <BlurReveal delay={0.15} className="text-slate text-lg leading-relaxed max-w-2xl font-light">
                   A distinguished leader in the field of civil engineering, whose vision and expertise continue to shape some of the nation's most iconic infrastructure projects.
-                </FadeUp>
+                </BlurReveal>
               </div>
 
               <div className="space-y-8 pt-6 border-t border-stone/30 max-w-xl">
@@ -628,9 +684,10 @@ export default function App() {
                 ].map((item, idx) => (
                   <motion.div
                     key={item.label}
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: idx * 0.1 }}
+                    initial={{ opacity: 0, y: 20, filter: 'blur(8px)', x: -20 }}
+                    whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)', x: 0 }}
+                    transition={{ delay: idx * 0.15, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                    viewport={{ once: true }}
                     className="flex gap-6 items-start group"
                   >
                     <div className="p-4 bg-estate-navy text-warm-gold rounded-full transition-transform duration-500 group-hover:scale-110 shrink-0">
@@ -643,7 +700,7 @@ export default function App() {
                   </motion.div>
                 ))}
               </div>
-            </div>
+            </SlideIn>
           </div>
         </section>
 
@@ -672,17 +729,17 @@ export default function App() {
 
           <div className="luxury-container text-center relative z-10">
             <motion.div
-              initial={{ opacity: 0, scale: 1.1 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
               viewport={{ once: false, amount: 0.5 }}
-              transition={{ duration: 2, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.5 }}
             >
               <h2 className="text-[48px] font-serif text-estate-navy lowercase tracking-tight leading-tight italic max-w-5xl mx-auto">
-                "A decision like this
+                <WordReveal>"A decision like this</WordReveal>
                 <span className="text-[#B28E4B] not-italic font-sans text-[48px] tracking-[0.3em] uppercase align-middle mx-6 font-bold whitespace-nowrap">
-                  deserves
+                  <WordReveal delay={0.3}>deserves</WordReveal>
                 </span>
-                clarity, not pressure."
+                <WordReveal delay={0.5}>clarity, not pressure."</WordReveal>
               </h2>
               <motion.div
                 initial={{ width: 0 }}
@@ -707,13 +764,13 @@ export default function App() {
           <div className="luxury-container relative z-10">
             {/* Header: Centered layout */}
             <div className="mb-20 text-center space-y-6">
-              <FadeUp className="text-warm-gold text-[10px] tracking-[0.4em] uppercase font-bold">Ownership</FadeUp>
+              <BlurReveal className="text-warm-gold text-[10px] tracking-[0.4em] uppercase font-bold">Ownership</BlurReveal>
               <h2 className="text-4xl lg:text-7xl text-estate-navy tracking-tighter leading-[1.1] font-serif">
-                What you own
+                <WordReveal>What you own</WordReveal>
               </h2>
-              <FadeUp delay={0.1} className="text-estate-navy/60 text-lg max-w-4xl mx-auto leading-relaxed">
+              <BlurReveal delay={0.2} className="text-estate-navy/60 text-lg max-w-4xl mx-auto leading-relaxed">
                 When you invest in Velora Inani, you acquire a specific, <span className="text-warm-gold">identifiable</span> hotel unit - <span className="italic opacity-60">not a share in a fund, not a promise on paper.</span>
-              </FadeUp>
+              </BlurReveal>
             </div>
 
             <div className="space-y-32">
@@ -769,23 +826,24 @@ export default function App() {
 
               {/* Closing statement block */}
               <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
+                transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
                 className="pt-16"
               >
                 <div className="bg-estate-navy text-white p-12 lg:p-20 relative overflow-hidden group">
                   <div className="absolute top-0 right-0 w-96 h-96 bg-warm-gold/[0.03] -translate-y-1/2 translate-x-1/2 rotate-45 border border-white/5 pointer-events-none" />
 
                   <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-16 relative z-10">
-                    <p className="font-serif italic text-3xl lg:text-5xl leading-[1.2] max-w-3xl text-white">
+                    <BlurReveal className="font-serif italic text-3xl lg:text-5xl leading-[1.2] max-w-3xl text-white">
                       "You own the asset. <span className="text-warm-gold not-italic">Eiman Estates runs the business</span> operating the hotel as a single, unified property to protect the value of every owner's investment."
-                    </p>
+                    </BlurReveal>
 
-                    <div className="flex flex-col sm:flex-row gap-8 items-center lg:shrink-0">
+                    <BlurReveal delay={0.3} className="flex flex-col sm:flex-row gap-8 items-center lg:shrink-0">
                       <Button className="!bg-warm-gold !text-estate-navy border-none h-16 px-10 text-sm font-bold uppercase tracking-widest hover:scale-105 transition-all">Request Legal Dossier</Button>
                       <p className="text-white/40 text-[10px] tracking-[0.2em] uppercase font-bold text-center lg:text-left">Verified Ownership <br /> Structure</p>
-                    </div>
+                    </BlurReveal>
                   </div>
                 </div>
               </motion.div>
@@ -945,14 +1003,9 @@ export default function App() {
 
           <div className="luxury-container relative z-10">
             <div className="grid lg:grid-cols-2 gap-24 items-end">
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-                className="space-y-12"
-              >
+              <SlideIn from="left" className="space-y-12">
                 <div className="space-y-4">
-                  <FadeUp className="text-[#DBAF5D] text-[10px] tracking-[0.5em] uppercase font-bold block">The Equity Model</FadeUp>
+                  <BlurReveal className="text-[#DBAF5D] text-[10px] tracking-[0.5em] uppercase font-bold block">The Equity Model</BlurReveal>
                   <h2 className="text-4xl md:text-[64px] text-white tracking-tighter leading-[1.3] font-serif">
                     <SplitText>Ownership </SplitText>
                     <SplitText className="italic whitespace-nowrap" delay={0.08}>You Can Share</SplitText>
@@ -961,33 +1014,28 @@ export default function App() {
 
                 <div className="h-[1px] w-24 bg-warm-gold" />
 
-                <p className="text-white text-xl md:text-2xl font-serif max-w-xl leading-relaxed italic">
+                <BlurReveal delay={0.2} className="text-white text-xl md:text-2xl font-serif max-w-xl leading-relaxed italic">
                   "Velora Inani offers something most hotel developments do not - a built - in equity model that lets you bring others into your investment."
-                </p>
-              </motion.div>
+                </BlurReveal>
+              </SlideIn>
 
-              <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.5, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                className="space-y-8 lg:pb-12"
-              >
-                <p className="text-white/80 text-lg leading-relaxed max-w-lg">
+              <SlideIn from="right" className="space-y-8 lg:pb-12">
+                <BlurReveal delay={0.1} className="text-white/80 text-lg leading-relaxed max-w-lg">
                   As a primary unit owner, you can introduce additional participants - family, partners, or trusted associates - each holding a documented fractional interest. You remain the registered owner. All participation is structured, documented, and managed under the oversight of Eiman Estates.
-                </p>
+                </BlurReveal>
 
-                <p className="text-[#DBAF5D] text-lg font-serif italic border-l border-warm-gold pl-6">
+                <BlurReveal delay={0.25} className="text-[#DBAF5D] text-lg font-serif italic border-l border-warm-gold pl-6">
                   This makes Velora Inani not just a personal investment, but one you can share on your terms.
-                </p>
+                </BlurReveal>
 
-                <div className="pt-8">
+                <BlurReveal delay={0.4} className="pt-8">
                   <button className="group relative flex items-center gap-4 text-white uppercase text-[10px] tracking-[0.4em] font-bold">
                     <span>Explore Structure</span>
                     <div className="w-12 h-[1px] bg-white group-hover:w-20 transition-all duration-500" />
                     <ArrowRight className="w-4 h-4" />
                   </button>
-                </div>
-              </motion.div>
+                </BlurReveal>
+              </SlideIn>
             </div>
           </div>
         </section>
@@ -996,15 +1044,9 @@ export default function App() {
         <section className="section-padding bg-sand">
           <div className="luxury-container">
             <div className="grid lg:grid-cols-2 gap-24 items-center">
-              <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-                viewport={{ once: true }}
-                className="space-y-12"
-              >
+              <SlideIn from="left" className="space-y-12">
                 <div className="space-y-4">
-                  <FadeUp className="text-warm-gold text-[10px] tracking-[0.5em] uppercase font-bold">About Eiman Estates</FadeUp>
+                  <BlurReveal className="text-warm-gold text-[10px] tracking-[0.5em] uppercase font-bold">About Eiman Estates</BlurReveal>
                   <h2 className="text-4xl lg:text-6xl text-estate-navy tracking-tight leading-[1.1] font-serif">
                     <SplitText>Built To The Same Standard </SplitText>
                     <SplitText className="italic" delay={0.08}>It Is Managed.</SplitText>
@@ -1012,31 +1054,31 @@ export default function App() {
                 </div>
 
                 <div className="space-y-8">
-                  <p className="text-warm-gold text-xl lg:text-2xl font-serif italic leading-relaxed border-l-2 border-warm-gold pl-6">
+                  <BlurReveal delay={0.1} className="text-warm-gold text-xl lg:text-2xl font-serif italic leading-relaxed border-l-2 border-warm-gold pl-6">
                     "Velora Inani is the first development by Eiman Estates - founded by a group of entrepreneurs with experience across real estate development, healthcare operations, manufacturing, and technology, including hospitality management software."
-                  </p>
+                  </BlurReveal>
 
                   <div className="space-y-6 text-mist text-base lg:text-lg leading-relaxed">
-                    <p>
+                    <BlurReveal delay={0.2}>
                       When you invest in Velora Inani, you don't manage tenants. You don't coordinate maintenance. You don't negotiate rates or handle compliance. That's our job - and it's the only job we do.
-                    </p>
-                    <p>
+                    </BlurReveal>
+                    <BlurReveal delay={0.28}>
                       Eiman Estates holds full responsibility for three things: building the asset right, operating it professionally, and reporting to you transparently.
-                    </p>
-                    <p>
+                    </BlurReveal>
+                    <BlurReveal delay={0.36}>
                       The project is designed by an international team led by HDD Shanghai and advised by Prof. Dr. M Shamim Z Bosunia - reflecting the same standard of rigour that defines how we build and how we operate.
-                    </p>
+                    </BlurReveal>
                   </div>
 
-                  <div className="pt-8">
+                  <BlurReveal delay={0.45} className="pt-8">
                     <button className="group relative flex items-center gap-4 text-estate-navy uppercase text-[10px] tracking-[0.4em] font-bold">
                       <span>Our Heritage</span>
                       <div className="w-12 h-[1px] bg-estate-navy group-hover:w-20 transition-all duration-500" />
                       <ArrowRight className="w-4 h-4" />
                     </button>
-                  </div>
+                  </BlurReveal>
                 </div>
-              </motion.div>
+              </SlideIn>
 
               <motion.div
                 initial={{ opacity: 0, y: 50 }}
@@ -1108,11 +1150,11 @@ export default function App() {
                   <SplitText className="italic text-warm-gold" delay={0.08}>Entry.</SplitText>
                 </h2>
               </div>
-              <FadeUp delay={0.1} className="text-slate text-lg max-w-2xl mx-auto leading-relaxed">
+              <BlurReveal delay={0.1} className="text-slate text-lg max-w-2xl mx-auto leading-relaxed">
                 When you're ready to learn more, we're ready to walk you through everything - clearly and at your pace.
-              </FadeUp>
+              </BlurReveal>
 
-              <div className="pt-4 pb-8 flex justify-center">
+              <BlurReveal delay={0.2} className="pt-4 pb-8 flex justify-center">
                 <a
                   href="#"
                   className="bg-estate-navy text-white px-10 py-5 rounded-none hover:bg-warm-gold hover:text-estate-navy transition-all duration-500 flex items-center gap-4 inline-flex group shadow-xl hover:shadow-2xl"
@@ -1128,7 +1170,7 @@ export default function App() {
                   </svg>
                   <span className="text-base font-bold tracking-[0.2em] uppercase">WhatsApp Us Directly</span>
                 </a>
-              </div>
+              </BlurReveal>
             </div>
 
             <div className="max-w-2xl mx-auto space-y-12">
@@ -1175,14 +1217,14 @@ export default function App() {
               </FadeIn>
 
               {/* Address Information */}
-              <div className="text-center space-y-2 text-slate/80 font-serif">
+              <BlurReveal delay={0.3} className="text-center space-y-2 text-slate/80 font-serif">
                 <p className="font-bold text-estate-navy text-lg">Eiman Estates Ltd.</p>
                 <p>[Office Address]</p>
                 <p>[Phone Number]</p>
                 <p className="border-b border-warm-gold/30 inline-block pb-1 mt-2 text-warm-gold hover:text-estate-navy transition-colors cursor-pointer">
                   [Email Address]
                 </p>
-              </div>
+              </BlurReveal>
             </div>
           </div>
         </section>
