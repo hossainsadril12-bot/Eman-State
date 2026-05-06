@@ -1279,7 +1279,7 @@ export default function App() {
               playsInline
               className="absolute inset-0 w-full h-full object-cover"
             >
-              <source src="/eman-estate-bg.mp4" type="video/mp4" />
+              <source src="/footer-video.mp4" type="video/mp4" />
             </video>
 
             {/* Layer 2: SVG Mask Cover */}
