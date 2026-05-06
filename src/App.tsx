@@ -1271,20 +1271,29 @@ export default function App() {
         {/* BOTTOM: Giant Brand Watermark */}
         <div className="relative overflow-hidden select-none pointer-events-none" style={{ height: 'clamp(120px, 18vw, 260px)' }}>
           <div className="absolute inset-0 flex items-center justify-center">
-            <span
-              className="font-serif font-bold uppercase tracking-[0.05em] text-transparent leading-none whitespace-nowrap"
-              style={{
-                fontSize: 'clamp(80px, 14vw, 220px)',
-                WebkitTextStroke: '1px rgba(255,255,255,0.06)',
-                backgroundImage: 'url(/footer-text-bg.jpg)',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                WebkitBackgroundClip: 'text',
-                backgroundClip: 'text',
-              }}
+            {/* Video Background for Text Mask */}
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover opacity-80"
             >
-              Eiman Estates
-            </span>
+              <source src="/eman-estate-bg.mp4" type="video/mp4" />
+            </video>
+
+            {/* Mask Overlay */}
+            <div className="absolute inset-0 bg-estate-navy flex items-center justify-center mix-blend-multiply">
+              <span
+                className="font-serif font-bold uppercase tracking-[0.05em] text-white leading-none whitespace-nowrap"
+                style={{
+                  fontSize: 'clamp(80px, 14vw, 220px)',
+                  WebkitTextStroke: '1px rgba(255,255,255,0.1)',
+                }}
+              >
+                Eiman Estates
+              </span>
+            </div>
           </div>
           {/* Subtle gold divider line at the top */}
           <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-warm-gold/20 to-transparent" />
