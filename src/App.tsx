@@ -1271,29 +1271,61 @@ export default function App() {
         {/* BOTTOM: Giant Brand Watermark */}
         <div className="relative overflow-hidden select-none pointer-events-none" style={{ height: 'clamp(120px, 18vw, 260px)' }}>
           <div className="absolute inset-0 flex items-center justify-center">
-            {/* Video Background for Text Mask */}
+            {/* Layer 1: Video Background */}
             <video
               autoPlay
               loop
               muted
               playsInline
-              className="absolute inset-0 w-full h-full object-cover opacity-80"
+              className="absolute inset-0 w-full h-full object-cover"
             >
               <source src="/eman-estate-bg.mp4" type="video/mp4" />
             </video>
 
-            {/* Mask Overlay */}
-            <div className="absolute inset-0 bg-estate-navy flex items-center justify-center mix-blend-multiply">
-              <span
-                className="font-serif font-bold uppercase tracking-[0.05em] text-white leading-none whitespace-nowrap"
-                style={{
-                  fontSize: 'clamp(80px, 14vw, 220px)',
-                  WebkitTextStroke: '1px rgba(255,255,255,0.1)',
-                }}
+            {/* Layer 2: SVG Mask Cover */}
+            <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="xMidYMid slice">
+              <defs>
+                <mask id="text-hole-mask">
+                  {/* White keeps the navy background solid everywhere */}
+                  <rect width="100%" height="100%" fill="white" />
+                  {/* Black punches a transparent hole in the shape of the text */}
+                  <text
+                    x="50%"
+                    y="50%"
+                    textAnchor="middle"
+                    dominantBaseline="central"
+                    className="font-serif font-bold uppercase tracking-[0.05em]"
+                    style={{ fontSize: 'clamp(80px, 14vw, 220px)' }}
+                    fill="black"
+                  >
+                    Eiman Estates
+                  </text>
+                </mask>
+              </defs>
+              
+              {/* Solid Navy cover with the text hole punched out */}
+              <rect 
+                width="100%" 
+                height="100%" 
+                fill="#1B2341" 
+                mask="url(#text-hole-mask)" 
+              />
+              
+              {/* Subtle stroke outline to define the letters clearly against the video */}
+              <text
+                x="50%"
+                y="50%"
+                textAnchor="middle"
+                dominantBaseline="central"
+                className="font-serif font-bold uppercase tracking-[0.05em]"
+                style={{ fontSize: 'clamp(80px, 14vw, 220px)' }}
+                fill="none"
+                stroke="rgba(255,255,255,0.15)"
+                strokeWidth="1.5"
               >
                 Eiman Estates
-              </span>
-            </div>
+              </text>
+            </svg>
           </div>
           {/* Subtle gold divider line at the top */}
           <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-warm-gold/20 to-transparent" />
