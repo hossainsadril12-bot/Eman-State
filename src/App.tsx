@@ -440,7 +440,7 @@ export default function App() {
 
                 <div className="space-y-6 max-w-2xl">
                   <p className="text-white/90 text-xl md:text-2xl font-serif italic leading-relaxed">
-                    A Hotel you don’t just stay in — <span className="not-italic font-sans text-xs tracking-[0.3em] uppercase">you own.</span>
+                    A Hotel you don’t just stay in - <span className="not-italic font-sans text-xs tracking-[0.3em] uppercase">you own.</span>
                   </p>
                 </div>
 
@@ -501,7 +501,7 @@ export default function App() {
 
               <div className="space-y-8">
                 <FadeUp delay={0.1} className="text-slate text-xl leading-relaxed font-light">
-                  Velora Inani is a fully managed hotel development set along a quiet, elevated stretch of Inani's coastline where the hills meet the sea — away from the congestion of the main tourist corridor.
+                  Velora Inani is a fully managed hotel development set along a quiet, elevated stretch of Inani's coastline where the hills meet the sea - away from the congestion of the main tourist corridor.
                 </FadeUp>
 
                 <FadeUp delay={0.18} className="text-warm-gold text-lg font-serif italic border-l-2 border-warm-gold/30 pl-8">
@@ -712,7 +712,7 @@ export default function App() {
                 What you own
               </h2>
               <FadeUp delay={0.1} className="text-estate-navy/60 text-lg max-w-4xl mx-auto leading-relaxed">
-                When you invest in Velora Inani, you acquire a specific, <span className="text-warm-gold">identifiable</span> hotel unit — <span className="italic opacity-60">not a share in a fund, not a promise on paper.</span>
+                When you invest in Velora Inani, you acquire a specific, <span className="text-warm-gold">identifiable</span> hotel unit - <span className="italic opacity-60">not a share in a fund, not a promise on paper.</span>
               </FadeUp>
             </div>
 
@@ -729,12 +729,12 @@ export default function App() {
                   {
                     title: "A Registered Deed (Saf Kabala)",
                     description: "Executed and recorded under the Registration Act, 1908, in your name.",
-                    image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&q=80&w=800"
+                    image: "/saf-kabala.png"
                   },
                   {
                     title: "A Proportional Share Of The Land",
                     description: "An undivided interest in the project land, mutated and registered in your name.",
-                    image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=800"
+                    image: "/land-share.png"
                   },
                   {
                     title: "Legal Title To Your Unit",
@@ -779,7 +779,7 @@ export default function App() {
 
                   <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-16 relative z-10">
                     <p className="font-serif italic text-3xl lg:text-5xl leading-[1.2] max-w-3xl text-white">
-                      "You own the asset. <span className="text-warm-gold not-italic">Eiman Estates runs the business</span> to protect the value of every owner's investment."
+                      "You own the asset. <span className="text-warm-gold not-italic">Eiman Estates runs the business</span> operating the hotel as a single, unified property to protect the value of every owner's investment."
                     </p>
 
                     <div className="flex flex-col sm:flex-row gap-8 items-center lg:shrink-0">
@@ -873,7 +873,7 @@ export default function App() {
                       Simple. Structured. Passive.
                     </p>
                     <p className="text-mist text-lg leading-relaxed opacity-80 max-w-lg">
-                      Your unit doesn't sit idle. It earns — as part of a collectively operated hotel where every unit contributes to and benefits from the property's total performance.
+                      Your unit doesn't sit idle. It earns - as part of a collectively operated hotel where every unit contributes to and benefits from the property's total performance.
                     </p>
                   </div>
                 </div>
@@ -952,7 +952,7 @@ export default function App() {
                 className="space-y-12"
               >
                 <div className="space-y-4">
-                  <FadeUp className="text-warm-gold text-[10px] tracking-[0.5em] uppercase font-bold block">The Equity Model</FadeUp>
+                  <FadeUp className="text-[#DBAF5D] text-[10px] tracking-[0.5em] uppercase font-bold block">The Equity Model</FadeUp>
                   <h2 className="text-4xl md:text-[64px] text-white tracking-tighter leading-[1.3] font-serif">
                     <SplitText>Ownership </SplitText>
                     <SplitText className="italic whitespace-nowrap" delay={0.08}>You Can Share</SplitText>
@@ -962,7 +962,7 @@ export default function App() {
                 <div className="h-[1px] w-24 bg-warm-gold" />
 
                 <p className="text-white text-xl md:text-2xl font-serif max-w-xl leading-relaxed italic">
-                  "Velora Inani offers something most hotel developments do not — a built-in equity model that lets you bring others into your investment."
+                  "Velora Inani offers something most hotel developments do not - a built - in equity model that lets you bring others into your investment."
                 </p>
               </motion.div>
 
@@ -973,10 +973,10 @@ export default function App() {
                 className="space-y-8 lg:pb-12"
               >
                 <p className="text-white/80 text-lg leading-relaxed max-w-lg">
-                  As a primary unit owner, you can introduce additional participants — family, partners, or trusted associates — each holding a documented fractional interest. You remain the registered owner. All participation is structured, documented, and managed under the oversight of Eiman Estates.
+                  As a primary unit owner, you can introduce additional participants - family, partners, or trusted associates - each holding a documented fractional interest. You remain the registered owner. All participation is structured, documented, and managed under the oversight of Eiman Estates.
                 </p>
 
-                <p className="text-warm-gold text-lg font-serif italic border-l border-warm-gold pl-6">
+                <p className="text-[#DBAF5D] text-lg font-serif italic border-l border-warm-gold pl-6">
                   This makes Velora Inani not just a personal investment, but one you can share on your terms.
                 </p>
 
@@ -1013,18 +1013,18 @@ export default function App() {
 
                 <div className="space-y-8">
                   <p className="text-warm-gold text-xl lg:text-2xl font-serif italic leading-relaxed border-l-2 border-warm-gold pl-6">
-                    "Velora Inani is the first development by Eiman Estates — founded by a group of entrepreneurs with experience across real estate development, healthcare operations, manufacturing, and technology, including hospitality management software."
+                    "Velora Inani is the first development by Eiman Estates - founded by a group of entrepreneurs with experience across real estate development, healthcare operations, manufacturing, and technology, including hospitality management software."
                   </p>
 
                   <div className="space-y-6 text-mist text-base lg:text-lg leading-relaxed">
                     <p>
-                      When you invest in Velora Inani, you don't manage tenants. You don't coordinate maintenance. You don't negotiate rates or handle compliance. That's our job — and it's the only job we do.
+                      When you invest in Velora Inani, you don't manage tenants. You don't coordinate maintenance. You don't negotiate rates or handle compliance. That's our job - and it's the only job we do.
                     </p>
                     <p>
                       Eiman Estates holds full responsibility for three things: building the asset right, operating it professionally, and reporting to you transparently.
                     </p>
                     <p>
-                      The project is designed by an international team led by HDD Shanghai and advised by Prof. Dr. M Shamim Z Bosunia — reflecting the same standard of rigour that defines how we build and how we operate.
+                      The project is designed by an international team led by HDD Shanghai and advised by Prof. Dr. M Shamim Z Bosunia - reflecting the same standard of rigour that defines how we build and how we operate.
                     </p>
                   </div>
 
@@ -1109,7 +1109,7 @@ export default function App() {
                 </h2>
               </div>
               <FadeUp delay={0.1} className="text-slate text-lg max-w-2xl mx-auto leading-relaxed">
-                When you're ready to learn more, we're ready to walk you through everything — clearly and at your pace.
+                When you're ready to learn more, we're ready to walk you through everything - clearly and at your pace.
               </FadeUp>
 
               <div className="pt-4 pb-8 flex justify-center">
