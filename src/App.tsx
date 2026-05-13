@@ -24,9 +24,12 @@ import {
   Share2,
   Coins,
   ShoppingBag,
-  Star,
+  ChevronLeft,
+  ChevronRight,
   Check
 } from 'lucide-react';
+
+const FALLBACK_IMAGE = "https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&q=80&w=2000";
 
 /* --- ANIMATION PRIMITIVES (UIBlockify-inspired Blur Reveal) --- */
 
@@ -284,10 +287,6 @@ const faqs = [
     answer: "Eiman Estates retains full and exclusive operational control of the hotel — from construction through to daily guest experience and financial reporting. Owners are not required to be involved in any aspect of hotel management."
   },
   {
-    question: "Who designed the project?",
-    answer: "Velora Inani is designed by HuaDu Architecture & Urban Design (HDD), a Shanghai-based firm with projects across Asia, Europe, and the Americas. Structural advisory is led by Prof. Dr. M Shamim Z Bosunia, one of Bangladesh's most prominent structural engineers."
-  },
-  {
     question: "What stage is the project currently at?",
     answer: "The project land at Inani has been secured and development is underway. A limited number of units are being offered in this first phase."
   },
@@ -309,7 +308,209 @@ const faqs = [
   }
 ];
 
+const hddProjects = [
+  {
+    id: 1,
+    title: "What defines our work",
+    label: "HDD Architecture Excellence",
+    description: "Our projects are shaped by structure, responsibility and attention to how spaces are used and experienced over time.",
+    image: "https://images.unsplash.com/photo-1600607687920-4e2a09695d51?auto=format&fit=crop&q=80&w=2000"
+  },
+  {
+    id: 2,
+    title: "Beijing Sunrise East Kempinski",
+    label: "Global Landmark",
+    description: "An iconic structural achievement spanning continents, merging traditional aesthetics with futuristic engineering.",
+    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2000"
+  },
+  {
+    id: 3,
+    title: "Urban Resilience",
+    label: "Sustainable Design",
+    description: "Designing for the future requires a balance between environmental integrity and human-centric spaces.",
+    image: "https://images.unsplash.com/photo-1503387762-592dea58ef23?auto=format&fit=crop&q=80&w=2000"
+  },
+  {
+    id: 4,
+    title: "Cultural Landmarks",
+    label: "Civic Architecture",
+    description: "Creating spaces that foster community and cultural exchange, blending modern functionality with civic identity.",
+    image: "https://images.unsplash.com/photo-1487958449913-d9279906c245?auto=format&fit=crop&q=80&w=2000"
+  },
+  {
+    id: 5,
+    title: "Luxury Hospitality",
+    label: "Resort & Hotel Design",
+    description: "Curating immersive environments that redefine luxury, offering unparalleled experiences in hospitality.",
+    image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=2000"
+  }
+];
+
+const HDDSection = () => {
+  const [index, setIndex] = useState(0);
+
+  const next = () => setIndex((i) => (i + 1) % hddProjects.length);
+  const prev = () => setIndex((i) => (i - 1 + hddProjects.length) % hddProjects.length);
+
+  // Helper to get cards in order for the carousel
+  const visibleCards = [
+    (index - 1 + hddProjects.length) % hddProjects.length,
+    index,
+    (index + 1) % hddProjects.length
+  ];
+
+  return (
+    <section className="pt-[120px] pb-[144px] bg-[#0d1b35] text-white relative overflow-hidden min-h-[1000px] flex flex-col justify-center">
+      {/* ── LUXURY WAVE TEXTURE BACKGROUND ── */}
+      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+        <svg
+          className="absolute inset-0 w-full h-full opacity-40"
+          viewBox="0 0 1440 900"
+          preserveAspectRatio="xMidYMid slice"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <defs>
+            <linearGradient id="waveGold1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#C9A96E" stopOpacity="0.18" />
+              <stop offset="100%" stopColor="#C9A96E" stopOpacity="0.04" />
+            </linearGradient>
+            <linearGradient id="waveGold2" x1="100%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#C9A96E" stopOpacity="0.12" />
+              <stop offset="100%" stopColor="#C9A96E" stopOpacity="0.03" />
+            </linearGradient>
+          </defs>
+          {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(i => (
+            <path
+              key={`w1-${i}`}
+              d={`M${-200 + i * 30},${900 - i * 40} C${300 + i * 20},${700 - i * 35} ${800 + i * 15},${400 - i * 25} ${1700 + i * 10},${100 - i * 20}`}
+              fill="none"
+              stroke="url(#waveGold1)"
+              strokeWidth={i % 3 === 0 ? 1.5 : 0.8}
+            />
+          ))}
+        </svg>
+      </div>
+
+      <div className="luxury-container relative z-10 w-full pt-10 md:pt-20">
+        {/* ── HEADING (ABOVE CARD) ── */}
+        <div className="max-w-5xl mx-auto mb-10 md:mb-16 text-center lg:text-left min-h-0 lg:min-h-[160px]">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif tracking-tight leading-[1.1] mb-6">
+            The project is designed by <span className="text-warm-gold italic font-serif">HuaDu Architecture & Urban Design (HDD)</span>
+          </h2>
+          <p className="text-white/70 font-sans font-normal text-lg md:text-xl max-w-4xl leading-relaxed tracking-wide">
+            A Shanghai-based firm whose portfolio spans three continents, including the Beijing Sunrise East Kempinski Hotel. HDD is responsible for the architectural, structural, MEP, and interior design of Velora Inani.
+          </p>
+        </div>
+
+        {/* ── CAROUSEL AREA ── */}
+        <div className="relative w-full flex items-center justify-center overflow-visible py-8 md:py-12">
+          
+          {/* Neighbors & Center Card */}
+          <div className="relative w-full max-w-4xl h-[400px] md:h-[550px] flex items-center justify-center">
+            <AnimatePresence initial={false} mode="popLayout">
+              {visibleCards.map((cardIndex, i) => {
+                const project = hddProjects[cardIndex];
+                const isCenter = i === 1;
+                const isLeft = i === 0;
+                
+                return (
+                  <motion.div
+                    key={`${project.id}-${cardIndex}`}
+                    layout
+                    initial={{ 
+                      opacity: 0, 
+                      scale: 0.8,
+                      x: isLeft ? '-100%' : '100%'
+                    }}
+                    animate={{
+                      opacity: isCenter ? 1 : 0.4,
+                      scale: isCenter ? 1 : 0.85,
+                      x: isCenter ? 0 : isLeft ? '-70%' : '70%',
+                      zIndex: isCenter ? 30 : 10,
+                      filter: isCenter ? "blur(0px)" : "blur(4px)",
+                    }}
+                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                    onClick={isLeft ? prev : isCenter ? undefined : next}
+                    className="absolute w-full h-full max-w-3xl rounded-none overflow-hidden shadow-2xl border border-white/10 group bg-estate-navy cursor-pointer"
+                  >
+                    <img
+                      src={project.image}
+                      onError={(e) => { (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&q=80&w=2000'; }}
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-[2s] ease-out group-hover:scale-105"
+                      alt={project.label}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0d1b35] via-[#0d1b35]/30 to-transparent" />
+                    
+                    {/* Project Name & Tag Label */}
+                    <div className="absolute bottom-10 left-10 z-20 max-w-[70%]">
+                      <h3 className="text-2xl md:text-3xl font-sans font-bold text-white mb-4 tracking-tight uppercase">
+                        {project.title}
+                      </h3>
+                      <div className="inline-block px-6 py-2 rounded-full border border-white/30 backdrop-blur-md bg-white/5 text-[10px] tracking-[0.2em] uppercase font-bold text-white">
+                        {project.label.split(' ')[0]}
+                      </div>
+                    </div>
+
+                    {/* Learn More Indicator */}
+                    {isCenter && (
+                      <div className="absolute bottom-10 right-10 z-20 flex items-center gap-4 text-white hover:text-warm-gold transition-colors cursor-pointer group/link">
+                        <span className="text-[10px] tracking-[0.3em] uppercase font-bold">Explore Project</span>
+                        <div className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center backdrop-blur-sm group-hover/link:border-warm-gold transition-all">
+                          <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
+                        </div>
+                      </div>
+                    )}
+                  </motion.div>
+                );
+              })}
+            </AnimatePresence>
+          </div>
+
+          {/* ── GLASS NAVIGATION ARROWS ── */}
+          <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-2 md:px-20 z-40 pointer-events-none">
+            <button 
+              onClick={prev}
+              className="pointer-events-auto w-12 h-12 md:w-16 md:h-16 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center text-white hover:bg-white/20 hover:scale-110 transition-all duration-500 shadow-2xl"
+            >
+              <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
+            </button>
+            <button 
+              onClick={next}
+              className="pointer-events-auto w-12 h-12 md:w-16 md:h-16 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center text-white hover:bg-white/20 hover:scale-110 transition-all duration-500 shadow-2xl"
+            >
+              <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
+            </button>
+          </div>
+        </div>
+
+        {/* ── INDICATORS (BELOW) ── */}
+        <div className="flex justify-center items-center gap-4 mt-20">
+          {hddProjects.map((p, i) => (
+            <button
+              key={p.id}
+              onClick={() => setIndex(i)}
+              className="group relative flex items-center justify-center p-2"
+            >
+              <div 
+                className={`h-2 rounded-full transition-all duration-700 ${index === i ? 'w-10 bg-warm-gold' : 'w-2 bg-white/20 group-hover:bg-white/40'}`} 
+              />
+              {index === i && (
+                <div className="absolute -top-6 text-[10px] tracking-widest text-warm-gold font-bold opacity-60 uppercase">
+                  0{i + 1}
+                </div>
+              )}
+            </button>
+          ))}
+        </div>
+
+
+      </div>
+    </section>
+  );
+};
+
 /* --- MAIN APP --- */
+
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -361,10 +562,10 @@ export default function App() {
         className="fixed top-0 w-full z-50 transition-all duration-500"
       >
         {/* TOP BAR */}
-        <div className="luxury-container h-24 flex items-center justify-between border-b border-white/10">
+        <div className="luxury-container h-20 md:h-24 flex items-center justify-between border-b border-white/10">
           <motion.div
             style={{ color: navText }}
-            className="flex-1 flex items-center gap-4 cursor-pointer group"
+            className="flex-1 flex items-center gap-3 md:gap-4 cursor-pointer group"
             onClick={() => setIsMenuOpen(true)}
           >
             <Menu className="w-5 h-5" />
@@ -380,18 +581,18 @@ export default function App() {
                 src="/logo-white.svg"
                 alt="Eman State Logo"
                 style={{ filter: useTransform(scrollY, [0, 100], ["invert(0)", "invert(1)"]) }}
-                className="h-12 w-auto"
+                className="h-8 md:h-12 w-auto"
               />
             </div>
           </motion.div>
 
           <motion.div
             style={{ color: navText }}
-            className="flex-1 flex justify-end items-center gap-8"
+            className="flex-1 flex justify-end items-center gap-4 md:gap-8"
           >
             <motion.button
               style={{ borderColor: navText, color: navText }}
-              className="px-6 py-2.5 border text-[10px] tracking-[0.3em] uppercase font-bold hover:bg-warm-gold hover:text-estate-navy hover:border-warm-gold transition-all duration-500 cursor-pointer"
+              className="px-4 md:px-6 py-2 md:py-2.5 border text-[9px] md:text-[10px] tracking-[0.2em] md:tracking-[0.3em] uppercase font-bold hover:bg-warm-gold hover:text-estate-navy hover:border-warm-gold transition-all duration-500 cursor-pointer"
             >
               Booking
             </motion.button>
@@ -476,27 +677,27 @@ export default function App() {
               <div className="absolute inset-0 bg-gradient-to-b from-[#0a192f]/50 via-transparent to-[#0a192f]/70" />
             </motion.div>
 
-            <div className="luxury-container relative z-10 h-full flex flex-col items-center justify-center text-center pt-48">
+            <div className="luxury-container relative z-10 h-full flex flex-col items-center justify-center text-center pt-32 md:pt-48">
               <motion.div
                 style={{ opacity: heroOpacity, y: heroTextY }}
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-                className="max-w-5xl flex flex-col items-center"
+                className="max-w-5xl flex flex-col items-center px-4"
               >
                 {/* Brand Area */}
-                <div className="mb-8 flex flex-col items-center">
-                  <h2 className="text-white text-3xl md:text-5xl tracking-[0.3em] uppercase font-serif mb-3">Velora Inani</h2>
-                  <p className="text-warm-gold text-[10px] md:text-xs tracking-[0.4em] uppercase font-bold opacity-90 italic">By Eiman Estates</p>
+                <div className="mb-6 md:mb-8 flex flex-col items-center">
+                  <h2 className="text-white text-2xl md:text-5xl tracking-[0.3em] uppercase font-serif mb-3">Velora Inani</h2>
+                  <p className="text-warm-gold text-[8px] md:text-xs tracking-[0.4em] uppercase font-bold opacity-90 italic">By Eiman Estates</p>
                 </div>
 
-                <h1 className="text-white text-5xl md:text-8xl lg:text-9xl leading-[1] mb-8 tracking-tight font-serif lowercase italic">
+                <h1 className="text-white text-4xl sm:text-5xl md:text-8xl lg:text-9xl leading-[1] mb-6 md:mb-8 tracking-tight font-serif lowercase italic">
                   Own What <span className="not-italic font-normal">Matters.</span>
                 </h1>
 
                 <div className="space-y-6 max-w-2xl">
-                  <p className="text-white/90 text-xl md:text-2xl font-serif italic leading-relaxed">
-                    A Hotel you don’t just stay in - <span className="not-italic font-sans text-xs tracking-[0.3em] uppercase">you own.</span>
+                  <p className="text-white/90 text-lg md:text-2xl font-serif italic leading-relaxed">
+                    A Hotel you don’t just stay in - <span className="not-italic font-sans text-[10px] md:text-xs tracking-[0.3em] uppercase">you own.</span>
                   </p>
                 </div>
 
@@ -563,10 +764,6 @@ export default function App() {
                 <BlurReveal delay={0.2} className="text-warm-gold text-lg font-serif italic border-l-2 border-warm-gold/30 pl-8">
                   A beachfront asset on Marine Drive, Cox's Bazar, designed for long-term ownership. A limited number of units are being offered in this first phase.
                 </BlurReveal>
-
-                <BlurReveal delay={0.3} className="text-mist text-base leading-relaxed">
-                  The project is designed by <span className="text-estate-navy font-semibold">HuaDu Architecture &amp; Urban Design (HDD)</span>, a Shanghai-based firm whose portfolio spans three continents, including the Beijing Sunrise East Kempinski Hotel. HDD is responsible for the architectural, structural, MEP, and interior design of Velora Inani.
-                </BlurReveal>
               </div>
 
               <BlurReveal delay={0.4} className="pt-8">
@@ -574,15 +771,16 @@ export default function App() {
               </BlurReveal>
             </SlideIn>
 
-            <div className="relative h-[650px] w-full">
+            <div className="relative h-[450px] md:h-[650px] w-full mt-12 md:mt-0">
               {/* Image 2: Beach Sunset (Top Right) - Further back */}
               <motion.div
                 style={{ y: aboutImg2Y }}
-                className="absolute top-0 right-0 w-[50%] h-[70%] bg-sand overflow-hidden shadow-xl z-0"
+                className="absolute top-0 right-0 w-[55%] md:w-[50%] h-[60%] md:h-[70%] bg-sand overflow-hidden shadow-xl z-0"
               >
                 <FadeIn className="w-full h-full">
                   <img
                     src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=800"
+                    onError={(e) => { (e.target as HTMLImageElement).src = FALLBACK_IMAGE; }}
                     className="w-full h-full object-cover"
                     alt="Destination"
                   />
@@ -592,7 +790,7 @@ export default function App() {
               {/* Image 1: Kayak (Middle Left) */}
               <motion.div
                 style={{ y: aboutImg1Y }}
-                className="absolute top-[10%] left-0 w-[60%] aspect-square bg-sand overflow-hidden shadow-2xl z-10"
+                className="absolute top-[15%] md:top-[10%] left-0 w-[60%] aspect-square bg-sand overflow-hidden shadow-2xl z-10"
               >
                 <FadeIn delay={0.1} className="w-full h-full">
                   <img
@@ -606,7 +804,7 @@ export default function App() {
               {/* Image 3: Resort Pool (Bottom Center) - Front */}
               <motion.div
                 style={{ y: aboutImg3Y }}
-                className="absolute top-[40%] left-[30%] w-[60%] aspect-[4/5] bg-sand overflow-hidden shadow-2xl z-20 border-4 border-white"
+                className="absolute top-[35%] md:top-[40%] left-[25%] md:left-[30%] w-[65%] md:w-[60%] aspect-[4/5] bg-sand overflow-hidden shadow-2xl z-20 border-2 md:border-4 border-white"
               >
                 <FadeIn delay={0.2} className="w-full h-full">
                   <img
@@ -703,16 +901,28 @@ export default function App() {
             </SlideIn>
           </div>
         </section>
+ 
+        {/* SECTION — THE ARCHITECTS (HDD) */}
+        <HDDSection />
+
+
+
 
         {/* BREATHER → Emotional Reset Moment */}
-        <section className="h-[80vh] flex items-center justify-center overflow-hidden bg-sand relative border-y border-stone/20">
-          {/* Background Image Layer */}
+        <section className="h-[80vh] flex items-center justify-center overflow-hidden bg-[#0d1b35] relative">
+          {/* Background Video Layer */}
           <div className="absolute inset-0 z-0">
-            <img
-              src="/breather-bg.jpg"
-              className="w-full h-full object-cover opacity-15 saturate-[0.8]"
-              alt="Background Atmosphere"
-            />
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full h-full object-cover opacity-40 saturate-[0.8]"
+            >
+              <source src="/breather-video.mp4" type="video/mp4" />
+            </video>
+            {/* Deep overlay for readability */}
+            <div className="absolute inset-0 bg-[#0d1b35]/60 mix-blend-multiply" />
           </div>
 
           <motion.div
@@ -727,19 +937,19 @@ export default function App() {
             transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
           />
 
-          <div className="luxury-container text-center relative z-10">
+          <div className="luxury-container text-center relative z-10 px-6">
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: false, amount: 0.5 }}
               transition={{ duration: 0.5 }}
             >
-              <h2 className="text-[48px] font-serif text-estate-navy lowercase tracking-tight leading-tight italic max-w-5xl mx-auto">
+              <h2 className="text-3xl md:text-[48px] font-serif text-white lowercase tracking-tight leading-tight italic max-w-5xl mx-auto">
                 <WordReveal>"A decision like this</WordReveal>
-                <span className="text-[#B28E4B] not-italic font-sans text-[48px] tracking-[0.3em] uppercase align-middle mx-6 font-bold whitespace-nowrap">
+                <span className="text-[#B28E4B] not-italic font-sans text-3xl md:text-[48px] tracking-[0.3em] uppercase align-middle mx-2 md:mx-6 font-bold whitespace-nowrap block md:inline-block my-4 md:my-0">
                   <WordReveal delay={0.3}>deserves</WordReveal>
                 </span>
-                <WordReveal delay={0.5}>clarity, not pressure."</WordReveal>
+                <WordReveal delay={0.6}>clarity, not pressure."</WordReveal>
               </h2>
               <motion.div
                 initial={{ width: 0 }}
@@ -752,7 +962,6 @@ export default function App() {
         </section>
 
         {/* OWNERSHIP MODEL → Structured + Scannable */}
-        {/* OWNERSHIP MODEL → Structured + Scannable */}
         <section className="section-padding bg-white relative overflow-hidden">
           {/* Subtle background element - puzzle pattern from About section */}
           <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
@@ -763,12 +972,12 @@ export default function App() {
 
           <div className="luxury-container relative z-10">
             {/* Header: Centered layout */}
-            <div className="mb-20 text-center space-y-6">
+            <div className="mb-12 md:mb-20 text-center space-y-4 md:space-y-6">
               <BlurReveal className="text-warm-gold text-[10px] tracking-[0.4em] uppercase font-bold">Ownership</BlurReveal>
-              <h2 className="text-4xl lg:text-7xl text-estate-navy tracking-tighter leading-[1.1] font-serif">
+              <h2 className="text-3xl md:text-5xl lg:text-7xl text-estate-navy tracking-tighter leading-[1.1] font-serif">
                 <WordReveal>What you own</WordReveal>
               </h2>
-              <BlurReveal delay={0.2} className="text-estate-navy/60 text-lg max-w-4xl mx-auto leading-relaxed">
+              <BlurReveal delay={0.2} className="text-estate-navy/60 text-base md:text-lg max-w-4xl mx-auto leading-relaxed px-4">
                 When you invest in Velora Inani, you acquire a specific, <span className="text-warm-gold">identifiable</span> hotel unit - <span className="italic opacity-60">not a share in a fund, not a promise on paper.</span>
               </BlurReveal>
             </div>
@@ -807,6 +1016,7 @@ export default function App() {
                     <div className="aspect-[16/10] w-full overflow-hidden mb-8 bg-estate-navy/5 relative border border-estate-navy/5">
                       <img
                         src={item.image}
+                        onError={(e) => { (e.target as HTMLImageElement).src = FALLBACK_IMAGE; }}
                         className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-105"
                         alt={item.title}
                       />
@@ -853,7 +1063,7 @@ export default function App() {
 
         {/* HOW YOU EARN → Apple-Style Sticky Scroll Storytelling */}
         <section ref={earnRef} className="relative h-[400vh] bg-white">
-          <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden pt-[160px]">
+          <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden pt-20 md:pt-[160px]">
             {/* Background Watermarks */}
             <div className="absolute inset-0 pointer-events-none opacity-[0.03]">
               <Landmark className="absolute top-20 left-20 w-96 h-96 -rotate-12" />
@@ -872,6 +1082,7 @@ export default function App() {
                       exit={{ opacity: 0, scale: 0.98 }}
                       transition={{ duration: 0.8, ease: "circOut" }}
                       src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&q=80&w=1200"
+                      onError={(e) => { (e.target as HTMLImageElement).src = FALLBACK_IMAGE; }}
                       className="absolute inset-0 w-full h-full object-cover"
                       alt="Income Generation"
                     />
@@ -921,22 +1132,22 @@ export default function App() {
               </div>
 
               {/* Right Side: Narrative Content Panels */}
-              <div className="relative h-[80vh] flex flex-col justify-center">
-                <div className="mb-20">
-                  <h2 className="text-5xl md:text-7xl text-estate-navy tracking-tight leading-none mb-8 font-serif">
+              <div className="relative h-full md:h-[80vh] flex flex-col justify-center pt-24 md:pt-0">
+                <div className="mb-10 md:mb-20">
+                  <h2 className="text-4xl md:text-7xl text-estate-navy tracking-tight leading-none mb-6 md:mb-8 font-serif">
                     How you <span className="italic">earn</span>
                   </h2>
                   <div className="space-y-4">
-                    <p className="text-warm-gold text-xs tracking-[0.3em] font-bold uppercase italic inline-block border-b border-warm-gold/20 pb-2">
+                    <p className="text-warm-gold text-[10px] md:text-xs tracking-[0.3em] font-bold uppercase italic inline-block border-b border-warm-gold/20 pb-2">
                       Simple. Structured. Passive.
                     </p>
-                    <p className="text-mist text-lg leading-relaxed opacity-80 max-w-lg">
+                    <p className="text-mist text-base md:text-lg leading-relaxed opacity-80 max-w-lg">
                       Your unit doesn't sit idle. It earns - as part of a collectively operated hotel where every unit contributes to and benefits from the property's total performance.
                     </p>
                   </div>
                 </div>
 
-                <div className="relative h-[400px]">
+                <div className="relative h-[300px] md:h-[400px]">
                   <AnimatePresence mode="popLayout">
                     <motion.div
                       key={earnStep}
@@ -944,10 +1155,10 @@ export default function App() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -20 }}
                       transition={{ duration: 0.5, ease: "circOut" }}
-                      className="absolute inset-0 space-y-6"
+                      className="absolute inset-0 space-y-4 md:space-y-6"
                     >
-                      <span className="text-estate-navy/30 text-5xl font-serif italic">Step 0{earnStep + 1}</span>
-                      <h4 className="text-3xl md:text-5xl text-estate-navy font-bold leading-tight">
+                      <span className="text-estate-navy/30 text-3xl md:text-5xl font-serif italic">Step 0{earnStep + 1}</span>
+                      <h4 className="text-2xl md:text-5xl text-estate-navy font-bold leading-tight">
                         {[
                           "The hotel generates income",
                           "All revenue is pooled",
@@ -955,7 +1166,7 @@ export default function App() {
                           "Net profit is distributed"
                         ][earnStep]}
                       </h4>
-                      <p className="text-mist text-xl leading-relaxed font-light min-h-[3.5em]">
+                      <p className="text-mist text-lg md:text-xl leading-relaxed font-light min-h-[3.5em]">
                         {[
                           "from rooms, food and beverage, events, and all guest services",
                           "across the property",
@@ -1174,42 +1385,42 @@ export default function App() {
             </div>
 
             <div className="max-w-2xl mx-auto space-y-12">
-              <FadeIn delay={0.2} className="bg-white p-12 lg:p-16 shadow-2xl relative z-10 border border-stone/10">
+              <FadeIn delay={0.2} className="bg-white p-6 md:p-12 lg:p-16 shadow-2xl relative z-10 border border-stone/10">
                 <form className="space-y-6">
                   <div className="w-full relative">
-                    <User className="absolute left-0 top-1/2 -translate-y-1/2 w-5 h-5 text-[#B28F4F]" />
+                    <User className="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-[#B28F4F]" />
                     <input
                       type="text"
                       placeholder="Your Name"
-                      className="w-full bg-transparent border-b border-stone/30 py-4 pl-10 text-estate-navy text-lg outline-none placeholder:text-stone transition-all duration-300 focus:border-warm-gold focus:py-6"
+                      className="w-full bg-transparent border-b border-stone/30 py-4 pl-8 md:pl-10 text-estate-navy text-base md:text-lg outline-none placeholder:text-stone transition-all duration-300 focus:border-warm-gold focus:py-6"
                     />
                   </div>
                   <div className="w-full relative">
-                    <Mail className="absolute left-0 top-1/2 -translate-y-1/2 w-5 h-5 text-[#B28F4F]" />
+                    <Mail className="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-[#B28F4F]" />
                     <input
                       type="email"
                       placeholder="Private Email"
-                      className="w-full bg-transparent border-b border-stone/30 py-4 pl-10 text-estate-navy text-lg outline-none placeholder:text-stone transition-all duration-300 focus:border-warm-gold focus:py-6"
+                      className="w-full bg-transparent border-b border-stone/30 py-4 pl-8 md:pl-10 text-estate-navy text-base md:text-lg outline-none placeholder:text-stone transition-all duration-300 focus:border-warm-gold focus:py-6"
                     />
                   </div>
                   <div className="w-full relative">
-                    <Phone className="absolute left-0 top-1/2 -translate-y-1/2 w-5 h-5 text-[#B28F4F]" />
+                    <Phone className="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-[#B28F4F]" />
                     <input
                       type="tel"
                       placeholder="Phone Details"
-                      className="w-full bg-transparent border-b border-stone/30 py-4 pl-10 text-estate-navy text-lg outline-none placeholder:text-stone transition-all duration-300 focus:border-warm-gold focus:py-6"
+                      className="w-full bg-transparent border-b border-stone/30 py-4 pl-8 md:pl-10 text-estate-navy text-base md:text-lg outline-none placeholder:text-stone transition-all duration-300 focus:border-warm-gold focus:py-6"
                     />
                   </div>
                   <div className="w-full relative">
-                    <MessageSquare className="absolute left-0 top-8 w-5 h-5 text-[#B28F4F]" />
+                    <MessageSquare className="absolute left-0 top-8 w-4 h-4 md:w-5 md:h-5 text-[#B28F4F]" />
                     <textarea
                       placeholder="Message"
                       rows={3}
-                      className="w-full bg-transparent border-b border-stone/30 py-4 pl-10 text-estate-navy text-lg outline-none placeholder:text-stone transition-all duration-300 focus:border-warm-gold focus:py-6 resize-none"
+                      className="w-full bg-transparent border-b border-stone/30 py-4 pl-8 md:pl-10 text-estate-navy text-base md:text-lg outline-none placeholder:text-stone transition-all duration-300 focus:border-warm-gold focus:py-6 resize-none"
                     ></textarea>
                   </div>
                   <div className="pt-8">
-                    <button type="button" className="w-full bg-estate-navy text-white text-[10px] tracking-[0.4em] uppercase font-bold py-6 hover:bg-warm-gold hover:text-estate-navy transition-colors duration-500">
+                    <button type="button" className="w-full bg-estate-navy text-white text-[9px] md:text-[10px] tracking-[0.3em] md:tracking-[0.4em] uppercase font-bold py-5 md:py-6 hover:bg-warm-gold hover:text-estate-navy transition-colors duration-500">
                       Submit Registration
                     </button>
                   </div>
@@ -1237,8 +1448,8 @@ export default function App() {
         <div className="luxury-container pt-20 pb-16 grid grid-cols-1 md:grid-cols-3 gap-16 border-b border-white/10 relative z-10">
 
           {/* LEFT: CTA Column */}
-          <div className="space-y-8">
-            <p className="text-3xl md:text-4xl font-serif leading-tight text-white">
+          <div className="space-y-6 md:space-y-8">
+            <p className="text-2xl md:text-3xl lg:text-4xl font-serif leading-tight text-white">
               We develop real estate assets built on ownership clarity, <span className="italic text-warm-gold">operational discipline</span>, and long-term trust.
             </p>
             <a

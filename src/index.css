@@ -36,7 +36,7 @@
 }
 
 .section-padding {
-  @apply py-[120px];
+  @apply py-20 md:py-[120px];
 }
 
 .luxury-divider {
